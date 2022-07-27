@@ -1,5 +1,6 @@
 package com.example.pushmessagetestapp.data.mapper
 
+import com.example.pushmessagetestapp.data.dto.MessageDto
 import com.example.pushmessagetestapp.domain.model.Message
 import com.example.pushmessagetestapp.util.Mapper
 import com.google.firebase.firestore.DocumentSnapshot
@@ -16,3 +17,9 @@ object MessageMapper : Mapper<DocumentSnapshot, Message> {
     private const val FROM = "from"
     private const val MESSAGE = "message"
 }
+
+fun MessageDto.toMessage() = Message(
+    created = created,
+    from = from,
+    message = message
+)

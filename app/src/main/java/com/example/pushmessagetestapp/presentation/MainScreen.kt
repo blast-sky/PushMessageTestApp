@@ -8,18 +8,12 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 
 @Composable
-fun MainScreen(viewModel: MainScreenViewModel = viewModel()) {
+fun MainScreen(viewModel: LocalMainScreenViewModel = viewModel()) {
 
-    val isSighIn by viewModel.isSignInState
+    val state = viewModel.state
 
-    val launcher = rememberLauncherForActivityResult(
-        contract = FirebaseAuthUIActivityResultContract(),
-        onResult = viewModel::onSignInResult
-    )
-
-    if (isSighIn) ChatList()
-    else SignIn { launcher.launch(viewModel.signInIntent) }
-
+    if (state.isLogin) ChatList()
+    else SignIn { name -> viewModel.register(name) }
 }
 
 

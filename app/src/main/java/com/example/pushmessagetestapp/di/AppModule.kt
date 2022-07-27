@@ -1,6 +1,10 @@
 package com.example.pushmessagetestapp.di
 
 import android.content.Context
+import android.content.SharedPreferences
+import com.example.pushmessagetestapp.data.repository.RepositoryImpl
+import com.example.pushmessagetestapp.domain.repository.Repository
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -11,16 +15,23 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class AppModule {
+class AppModule {
 
     @Named("Login")
     @Singleton
     @Provides
-    fun provideSharedPreference(@ApplicationContext context: Context) =
+    fun provideSharedPreference(@ApplicationContext context: Context): SharedPreferences =
         context.getSharedPreferences(LOGIN_PREFERENCES, Context.MODE_PRIVATE)
-
 
     private companion object {
         const val LOGIN_PREFERENCES = "LOGIN_SHARED_PREFERENCES"
     }
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+interface AppModuleBinds {
+
+    @Binds
+    fun bindRepository(impl: RepositoryImpl) : Repository
 }

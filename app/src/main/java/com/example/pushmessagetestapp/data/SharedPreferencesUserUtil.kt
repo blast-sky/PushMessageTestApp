@@ -11,6 +11,10 @@ class SharedPreferencesUserUtil @Inject constructor(
     @Named("Login") private val sharedPreferences: SharedPreferences
 ) {
 
+    var messageToken
+        get() = sharedPreferences.getString(TOKEN, "")!!
+        set(value) = sharedPreferences.edit { putString(TOKEN, value) }
+
     var isLogin
         get() = sharedPreferences.getBoolean(IS_LOGIN, false)
         private set(value) = sharedPreferences.edit { putBoolean(IS_LOGIN, value) }
@@ -25,13 +29,14 @@ class SharedPreferencesUserUtil @Inject constructor(
         isLogin = true
     }
 
-    fun rename(newName: String){
+    fun rename(newName: String) {
         require(isLogin)
-        this.name = name
+        name = newName
     }
 
     private companion object {
         const val IS_LOGIN = "IS_LOGIN"
         const val NAME = "NAME"
+        const val TOKEN = "TOKEN"
     }
 }

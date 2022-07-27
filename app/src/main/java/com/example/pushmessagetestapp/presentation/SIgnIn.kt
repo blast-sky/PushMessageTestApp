@@ -1,31 +1,56 @@
 package com.example.pushmessagetestapp.presentation
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.material.TextField
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 
 @Composable
-fun SignIn(onCLick: () -> Unit) {
+fun SignIn(onCLick: (String) -> Unit) {
     val updatedOnClick by rememberUpdatedState(newValue = onCLick)
+    var password by rememberSaveable { mutableStateOf("") }
+    var name by rememberSaveable { mutableStateOf("") }
 
-    Box(
+    Column(
         modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Button(onClick = updatedOnClick) {
+//        TextField(
+//            value = password, onValueChange = { password = it },
+//            label = { Text("Enter password") },
+//            visualTransformation = PasswordVisualTransformation(),
+//            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
+//        )
+
+        TextField(
+            value = name, onValueChange = { name = it },
+            label = { Text("Enter name") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+        )
+        
+        Spacer(modifier = Modifier.height(30.dp))
+
+        Button(onClick = { updatedOnClick.invoke(name) }) {
             Text(text = "SignIn")
         }
     }
 }
 
-@Preview(name = "SignIn")
+@Preview(
+    name = "SignIn",
+    showSystemUi = true,
+    showBackground = true
+)
 @Composable
 fun PreviewSignIn() {
     SignIn {}

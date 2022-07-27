@@ -3,16 +3,14 @@ package com.example.pushmessagetestapp.data
 import android.content.Context
 import android.util.Log
 import com.example.pushmessagetestapp.data.mapper.MessageMapper
-import com.example.pushmessagetestapp.domain.model.Message
+import com.example.pushmessagetestapp.data.mapper.toUserDto
+import com.example.pushmessagetestapp.domain.model.User
 import com.example.pushmessagetestapp.util.optimizedLazy
+import com.example.pushmessagetestapp.util.suspend
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QuerySnapshot
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.suspendCancellableCoroutine
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -21,25 +19,27 @@ class StoreUtil @Inject constructor(
     @ApplicationContext private val context: Context,
 ) {
 
-    private val firebaseFirestore by optimizedLazy { FirebaseFirestore.getInstance() }
+    private val firebaseFirestore by optimizedLazy {
+        FirebaseFirestore.getInstance()
+    }
 
     private val chatsCollectionReference by optimizedLazy {
         firebaseFirestore.collection(CHAT_COLLECTION)
     }
 
-    suspend fun getUserChats(userId: String) =
-        suspendCancellableCoroutine<QuerySnapshot> { continuation ->
-            chatsCollectionReference.whereArrayContains(USERS_COLLECTION, userId).get()
-                .addOnSuccessListener { chats ->
-                    continuation.resumeWith(Result.success(chats))
-                }.addOnFailureListener { exception ->
-                    continuation.resumeWith(Result.failure(exception))
-                }.addOnCanceledListener {
-                    continuation.cancel()
-                }
-        }
+    private val usersCollectionReference by optimizedLazy {
+        firebaseFirestore.collection(USERS_COLLECTION)
+    }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
+    suspend fun getUserChats(userId: String) =
+        chatsCollectionReference
+            .whereArrayContains(USERS_COLLECTION_IN_CHAT, userId)
+            .get()
+            .suspend()
+
+    suspend fun getUserById(userId: String) =
+        usersCollectionReference.document(userId).get().suspend()
+
     fun getChatMessagesFlow(chatId: String) = callbackFlow {
         val registration = chatsCollectionReference.document(chatId).collection(MESSAGE_COLLECTION)
             .addSnapshotListener { value, error ->
@@ -52,9 +52,13 @@ class StoreUtil @Inject constructor(
         awaitClose { registration.remove() }
     }
 
+    suspend fun addNewUser(user: User): Void? =
+        usersCollectionReference.document(user.token).set(user.toUserDto()).suspend()
+
     companion object {
         const val CHAT_COLLECTION = "chats"
         const val MESSAGE_COLLECTION = "messages"
         const val USERS_COLLECTION = "users"
+        const val USERS_COLLECTION_IN_CHAT = "users"
     }
 }
