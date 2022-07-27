@@ -7,7 +7,10 @@ import com.example.pushmessagetestapp.data.mapper.toUserDto
 import com.example.pushmessagetestapp.domain.model.User
 import com.example.pushmessagetestapp.util.optimizedLazy
 import com.example.pushmessagetestapp.util.suspend
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
@@ -31,13 +34,19 @@ class StoreUtil @Inject constructor(
         firebaseFirestore.collection(USERS_COLLECTION)
     }
 
-    suspend fun getUserChats(userId: String) =
+    suspend fun getUserChats(userId: String): QuerySnapshot =
         chatsCollectionReference
             .whereArrayContains(USERS_COLLECTION_IN_CHAT, userId)
             .get()
             .suspend()
 
-    suspend fun getUserById(userId: String) =
+    suspend fun getMessages(charReference: DocumentReference) =
+        charReference.collection(MESSAGE_COLLECTION)
+            .get()
+            .suspend()
+            .documents
+
+    suspend fun getUserById(userId: String): DocumentSnapshot =
         usersCollectionReference.document(userId).get().suspend()
 
     fun getChatMessagesFlow(chatId: String) = callbackFlow {
@@ -52,8 +61,8 @@ class StoreUtil @Inject constructor(
         awaitClose { registration.remove() }
     }
 
-    suspend fun addNewUser(user: User): Void? =
-        usersCollectionReference.document(user.token).set(user.toUserDto()).suspend()
+    suspend fun addNewUser(user: User): DocumentReference =
+        usersCollectionReference.add(user.toUserDto()).suspend()
 
     companion object {
         const val CHAT_COLLECTION = "chats"

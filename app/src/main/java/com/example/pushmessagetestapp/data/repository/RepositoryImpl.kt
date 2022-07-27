@@ -2,11 +2,14 @@ package com.example.pushmessagetestapp.data.repository
 
 import com.example.pushmessagetestapp.data.StoreUtil
 import com.example.pushmessagetestapp.data.dto.ChatDto
+import com.example.pushmessagetestapp.data.dto.MessageDto
 import com.example.pushmessagetestapp.data.dto.UserDto
 import com.example.pushmessagetestapp.data.mapper.toMessage
 import com.example.pushmessagetestapp.domain.model.Chat
+import com.example.pushmessagetestapp.domain.model.Message
 import com.example.pushmessagetestapp.domain.model.User
 import com.example.pushmessagetestapp.domain.repository.Repository
+import com.google.firebase.firestore.ktx.toObject
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -17,13 +20,20 @@ class RepositoryImpl @Inject constructor(
 
     override suspend fun getUserChats(userId: String): List<Chat> = storeUtil
         .getUserChats(userId)
-        .map { documentSnapshot ->
-            val dto = documentSnapshot.toObject(ChatDto::class.java)
-            val users = dto.users.map { userId ->
-                val name = storeUtil.getUserById(userId).toObject(UserDto::class.java)?.name ?: "No User Name"
-                User(token = userId, name = name)
+        .map { queryDocumentSnapshot ->
+            val chatDto = queryDocumentSnapshot.toObject<ChatDto>()
+            val users = chatDto.users.map { userId ->
+                val name = storeUtil.getUserById(userId).toObject<UserDto>()?.name
+                    ?: "No User Name"
+                User(messageToken = userId, name = name)
             }
-            val messages = dto.messages.map { it.toMessage() }
-            Chat(users = users, messages = messages)
+            val messages = storeUtil.getMessages(queryDocumentSnapshot.reference).map {
+                it.toObject<MessageDto>()?.toMessage() ?: MessageDto().toMessage()
+            }
+
+            return@map Chat(users = users, messages = messages)
         }
+
+    override suspend fun addNewUser(user: User): String = storeUtil.addNewUser(user).id
+
 }

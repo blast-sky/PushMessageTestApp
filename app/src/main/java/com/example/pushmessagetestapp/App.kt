@@ -4,6 +4,7 @@ import android.app.Application
 import android.util.Log
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.HiltAndroidApp
+import javax.inject.Inject
 
 @HiltAndroidApp
 class App : Application() {
@@ -12,7 +13,8 @@ class App : Application() {
 
         FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
             if(!task.isSuccessful) return@addOnCompleteListener
-            Log.d("MYTAG", task.result)
+
+            Log.d("MY_TAG", task.result)
         }
     }
 }

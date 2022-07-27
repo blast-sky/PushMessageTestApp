@@ -17,7 +17,6 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun SignIn(onCLick: (String) -> Unit) {
     val updatedOnClick by rememberUpdatedState(newValue = onCLick)
-    var password by rememberSaveable { mutableStateOf("") }
     var name by rememberSaveable { mutableStateOf("") }
 
     Column(
@@ -25,20 +24,13 @@ fun SignIn(onCLick: (String) -> Unit) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-//        TextField(
-//            value = password, onValueChange = { password = it },
-//            label = { Text("Enter password") },
-//            visualTransformation = PasswordVisualTransformation(),
-//            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
-//        )
-
         TextField(
             value = name, onValueChange = { name = it },
             label = { Text("Enter name") },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
         )
         
-        Spacer(modifier = Modifier.height(30.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
         Button(onClick = { updatedOnClick.invoke(name) }) {
             Text(text = "SignIn")
