@@ -8,7 +8,8 @@ import com.google.firebase.firestore.DocumentSnapshot
 object MessageMapper : Mapper<DocumentSnapshot, Message> {
 
     override fun map(value: DocumentSnapshot): Message = Message(
-        created = value.getTimestamp(CREATED) ?: error("No '$CREATED' field in message"),
+        id = value.id,
+        created = value.getTimestamp(CREATED)?.toDate() ?: error("No '$CREATED' field in message"),
         from = value.getString(FROM) ?: error("No '$FROM' field in message"),
         message = value.getString(MESSAGE) ?: error("No '$MESSAGE' field in message"),
     )
@@ -19,7 +20,8 @@ object MessageMapper : Mapper<DocumentSnapshot, Message> {
 }
 
 fun MessageDto.toMessage() = Message(
-    created = created,
+    id = id,
+    created = created.toDate(),
     from = from,
     message = message
 )

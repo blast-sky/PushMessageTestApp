@@ -1,8 +1,9 @@
-package com.example.pushmessagetestapp.presentation
+package com.example.pushmessagetestapp.presentation.main_screen.compose
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
@@ -11,22 +12,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import com.example.pushmessagetestapp.R
 import com.example.pushmessagetestapp.domain.model.Chat
 import com.example.pushmessagetestapp.util.Resource
 
 @Composable
-fun ChatList(chats: Resource<List<Chat>>) {
+fun ChatList(chats: Resource<List<Chat>>, onChatClicked: (String) -> Unit) {
 
-    when(chats) {
+    when (chats) {
         is Resource.Created, is Resource.Loading -> ChatListLoading()
         is Resource.Error -> ChatListError()
-        is Resource.Success -> ChatListSuccess(chats.value)
+        is Resource.Success -> ChatListSuccess(chats.value, onChatClicked)
     }
 }
 
 @Composable
-fun ChatListLoading() {
+private fun ChatListLoading() {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -37,15 +39,19 @@ fun ChatListLoading() {
 }
 
 @Composable
-private fun ChatListSuccess(chats: List<Chat>) {
+private fun ChatListSuccess(chats: List<Chat>, onChatClicked: (String) -> Unit) {
     LazyColumn(modifier = Modifier) {
-        if(chats.isEmpty())
+        if (chats.isEmpty())
             item {
-                Text(text = stringResource(R.string.no_chats))
+                Text(
+                    text = stringResource(R.string.no_chats),
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center
+                )
             }
 
         items(chats) { chat ->
-            ChatListItem(chat = chat)
+            ChatListItem(chat = chat, onChatClicked)
         }
     }
 }

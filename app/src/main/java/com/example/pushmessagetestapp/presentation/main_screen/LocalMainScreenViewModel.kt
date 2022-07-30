@@ -1,18 +1,15 @@
-package com.example.pushmessagetestapp.presentation
+package com.example.pushmessagetestapp.presentation.main_screen
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.pushmessagetestapp.data.MessagingUtil
-import com.example.pushmessagetestapp.data.SharedPreferencesUserUtil
+import com.example.pushmessagetestapp.data.remote.MessagingUtil
+import com.example.pushmessagetestapp.data.local.SharedPreferencesUserUtil
 import com.example.pushmessagetestapp.domain.model.User
 import com.example.pushmessagetestapp.domain.repository.Repository
 import com.example.pushmessagetestapp.util.Resource
-import com.example.pushmessagetestapp.util.suspend
-import com.google.firebase.messaging.FirebaseMessaging
-import com.google.firebase.messaging.FirebaseMessagingService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -45,10 +42,11 @@ class LocalMainScreenViewModel @Inject constructor(
     }
 
     fun register(name: String) = viewModelScope.launch {
-        val newUserId = repository.addNewUser(User(messagingUtil.getToken(), name))
+        val newUserId = repository.addNewUser(User("", messagingUtil.getToken(), name))
         if (newUserId.isNotEmpty()) {
             sharedPreferencesUserUtil.register(newUserId, name)
             state = state.copy(isLogin = true)
+            loadChats()
         }
     }
 }

@@ -1,13 +1,11 @@
-package com.example.pushmessagetestapp.presentation
+package com.example.pushmessagetestapp.presentation.main_screen
 
 import android.app.Activity
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import com.example.pushmessagetestapp.data.SharedPreferencesUserUtil
-import com.example.pushmessagetestapp.data.SignInUtil
-import com.example.pushmessagetestapp.data.StoreUtil
+import com.example.pushmessagetestapp.data.local.SharedPreferencesUserUtil
+import com.example.pushmessagetestapp.data.remote.SignInUtil
+import com.example.pushmessagetestapp.data.local.StoreUtil
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

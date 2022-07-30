@@ -1,7 +1,9 @@
 package com.example.pushmessagetestapp.data.dto
 
-import kotlinx.serialization.SerialName
+import com.google.firebase.firestore.DocumentId
+import com.google.firebase.firestore.PropertyName
 
 data class ChatDto(
-    @SerialName("users") val users: List<String> = emptyList(),
+    @DocumentId val id: String = "",
+    @PropertyName("users") val users: List<String> = emptyList(),
 )

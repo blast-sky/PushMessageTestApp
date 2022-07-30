@@ -1,4 +1,4 @@
-package com.example.pushmessagetestapp.data
+package com.example.pushmessagetestapp.data.remote
 
 import com.example.pushmessagetestapp.util.suspend
 import com.google.firebase.messaging.FirebaseMessaging

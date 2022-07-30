@@ -1,5 +1,6 @@
-package com.example.pushmessagetestapp.data
+package com.example.pushmessagetestapp.data.remote
 
+import com.example.pushmessagetestapp.data.local.SharedPreferencesUserUtil
 import com.google.firebase.messaging.FirebaseMessagingService
 import dagger.hilt.android.scopes.ServiceScoped
 import javax.inject.Inject

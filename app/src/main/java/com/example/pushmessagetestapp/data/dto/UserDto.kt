@@ -1,8 +1,10 @@
 package com.example.pushmessagetestapp.data.dto
 
-import kotlinx.serialization.SerialName
+import com.google.firebase.firestore.DocumentId
+import com.google.firebase.firestore.PropertyName
 
 data class UserDto(
-    @SerialName("name") val name: String = "",
-    @SerialName("messageToken") val messageToken: String = "",
+    @DocumentId val id: String = "",
+    @PropertyName("name") val name: String = "",
+    @PropertyName("messageToken") val messageToken: String = "",
 )

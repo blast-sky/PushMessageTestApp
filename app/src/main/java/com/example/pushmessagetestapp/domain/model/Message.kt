@@ -1,9 +1,10 @@
 package com.example.pushmessagetestapp.domain.model
 
-import com.google.firebase.Timestamp
+import java.util.*
 
 data class Message(
-    val created: Timestamp,
+    val id: String,
+    val created: Date,
     val from: String,
     val message: String
 )

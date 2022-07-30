@@ -3,15 +3,10 @@ package com.example.pushmessagetestapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.pushmessagetestapp.presentation.MainScreen
-import com.example.pushmessagetestapp.ui.theme.PushMessageTestAppTheme
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
+import com.example.pushmessagetestapp.presentation.navigation.mainGraph
+import com.example.pushmessagetestapp.presentation.ui.theme.PushMessageTestAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -20,7 +15,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             PushMessageTestAppTheme {
-                MainScreen()
+                val navController = rememberNavController()
+                NavHost(
+                    navController = navController,
+                    startDestination = "mainGraph"
+                ) {
+                    mainGraph(navController)
+                }
             }
         }
     }

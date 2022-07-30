@@ -1,4 +1,4 @@
-package com.example.pushmessagetestapp.data
+package com.example.pushmessagetestapp.data.local
 
 import android.content.Context
 import android.util.Log
@@ -40,7 +40,7 @@ class StoreUtil @Inject constructor(
             .get()
             .suspend()
 
-    suspend fun getMessages(charReference: DocumentReference) =
+    suspend fun getMessages(charReference: DocumentReference): MutableList<DocumentSnapshot> =
         charReference.collection(MESSAGE_COLLECTION)
             .get()
             .suspend()
@@ -64,7 +64,7 @@ class StoreUtil @Inject constructor(
     suspend fun addNewUser(user: User): DocumentReference =
         usersCollectionReference.add(user.toUserDto()).suspend()
 
-    companion object {
+    private companion object {
         const val CHAT_COLLECTION = "chats"
         const val MESSAGE_COLLECTION = "messages"
         const val USERS_COLLECTION = "users"

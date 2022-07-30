@@ -1,4 +1,4 @@
-package com.example.pushmessagetestapp.ui.theme
+package com.example.pushmessagetestapp.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

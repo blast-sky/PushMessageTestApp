@@ -1,4 +1,4 @@
-package com.example.pushmessagetestapp.presentation
+package com.example.pushmessagetestapp.presentation.main_screen.compose
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -10,7 +10,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
@@ -44,6 +43,6 @@ fun SignIn(onCLick: (String) -> Unit) {
     showBackground = true
 )
 @Composable
-fun PreviewSignIn() {
+private fun PreviewSignIn() {
     SignIn {}
 }

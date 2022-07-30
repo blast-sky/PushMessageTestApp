@@ -1,6 +1,5 @@
 package com.example.pushmessagetestapp.util
 
-import com.example.pushmessagetestapp.data.StoreUtil
 import com.google.android.gms.tasks.Task
 import kotlinx.coroutines.suspendCancellableCoroutine
 

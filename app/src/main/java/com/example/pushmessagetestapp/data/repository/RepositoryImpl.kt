@@ -1,12 +1,11 @@
 package com.example.pushmessagetestapp.data.repository
 
-import com.example.pushmessagetestapp.data.StoreUtil
+import com.example.pushmessagetestapp.data.local.StoreUtil
 import com.example.pushmessagetestapp.data.dto.ChatDto
 import com.example.pushmessagetestapp.data.dto.MessageDto
 import com.example.pushmessagetestapp.data.dto.UserDto
 import com.example.pushmessagetestapp.data.mapper.toMessage
 import com.example.pushmessagetestapp.domain.model.Chat
-import com.example.pushmessagetestapp.domain.model.Message
 import com.example.pushmessagetestapp.domain.model.User
 import com.example.pushmessagetestapp.domain.repository.Repository
 import com.google.firebase.firestore.ktx.toObject
@@ -25,13 +24,13 @@ class RepositoryImpl @Inject constructor(
             val users = chatDto.users.map { userId ->
                 val name = storeUtil.getUserById(userId).toObject<UserDto>()?.name
                     ?: "No User Name"
-                User(messageToken = userId, name = name)
+                User(id = userId, messageToken = userId, name = name)
             }
             val messages = storeUtil.getMessages(queryDocumentSnapshot.reference).map {
                 it.toObject<MessageDto>()?.toMessage() ?: MessageDto().toMessage()
             }
 
-            return@map Chat(users = users, messages = messages)
+            return@map Chat(id = chatDto.id, users = users, messages = messages)
         }
 
     override suspend fun addNewUser(user: User): String = storeUtil.addNewUser(user).id

@@ -1,4 +1,4 @@
-package com.example.pushmessagetestapp.presentation
+package com.example.pushmessagetestapp.presentation.main_screen
 
 import com.example.pushmessagetestapp.domain.model.Chat
 import com.example.pushmessagetestapp.util.Resource
