@@ -1,19 +1,23 @@
 package com.example.pushmessagetestapp.data.repository
 
-import com.example.pushmessagetestapp.data.local.StoreUtil
+import com.example.pushmessagetestapp.data.remote.StoreUtil
 import com.example.pushmessagetestapp.data.dto.ChatDto
 import com.example.pushmessagetestapp.data.dto.MessageDto
 import com.example.pushmessagetestapp.data.dto.UserDto
+import com.example.pushmessagetestapp.data.mapper.MessageMapper
 import com.example.pushmessagetestapp.data.mapper.toMessage
 import com.example.pushmessagetestapp.domain.model.Chat
+import com.example.pushmessagetestapp.domain.model.Message
 import com.example.pushmessagetestapp.domain.model.User
 import com.example.pushmessagetestapp.domain.repository.Repository
 import com.google.firebase.firestore.ktx.toObject
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class RepositoryImpl @Inject constructor(
+class DefaultRepository @Inject constructor(
     private val storeUtil: StoreUtil
 ) : Repository {
 
@@ -34,5 +38,11 @@ class RepositoryImpl @Inject constructor(
         }
 
     override suspend fun addNewUser(user: User): String = storeUtil.addNewUser(user).id
+
+    override suspend fun getChatMessages(chatId: String): Flow<List<Message>> =
+        storeUtil.getChatMessagesFlow(chatId).map { it.map(MessageMapper::map) }
+
+    override suspend fun sendMessage(chatId: String, message: String, fromId: String): String =
+        storeUtil.addNewMessage(chatId, message, fromId).id
 
 }

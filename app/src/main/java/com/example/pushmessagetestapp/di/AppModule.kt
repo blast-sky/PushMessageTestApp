@@ -2,7 +2,7 @@ package com.example.pushmessagetestapp.di
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.example.pushmessagetestapp.data.repository.RepositoryImpl
+import com.example.pushmessagetestapp.data.repository.DefaultRepository
 import com.example.pushmessagetestapp.domain.repository.Repository
 import dagger.Binds
 import dagger.Module
@@ -33,5 +33,5 @@ class AppModule {
 interface AppModuleBinds {
 
     @Binds
-    fun bindRepository(impl: RepositoryImpl) : Repository
+    fun bindRepository(impl: DefaultRepository) : Repository
 }

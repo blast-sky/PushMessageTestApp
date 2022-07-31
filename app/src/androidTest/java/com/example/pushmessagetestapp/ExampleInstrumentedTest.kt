@@ -4,7 +4,9 @@ package com.example.pushmessagetestapp
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.example.pushmessagetestapp.data.local.StoreUtil
+import com.example.pushmessagetestapp.data.dto.MessageDto
+import com.example.pushmessagetestapp.data.remote.StoreUtil
+import com.google.firebase.firestore.ktx.toObject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.test.runTest
@@ -28,7 +30,7 @@ class ExampleInstrumentedTest {
 
         StoreUtil(appContext).getChatMessagesFlow("3HtpyL0b4RrUZbexs4yg").take(1).collect { message ->
             assertTrue(message.isNotEmpty())
-            assertEquals(message.first().message, "hi")
+            assertEquals(message.first().toObject<MessageDto>()?.message, "hi")
         }
 
         assertEquals("com.example.pushmessagetestapp", appContext.packageName)

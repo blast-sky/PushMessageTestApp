@@ -1,7 +1,6 @@
 package com.example.pushmessagetestapp.data.remote
 
 import com.example.pushmessagetestapp.R
-import com.example.pushmessagetestapp.data.local.StoreUtil
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import javax.inject.Inject
