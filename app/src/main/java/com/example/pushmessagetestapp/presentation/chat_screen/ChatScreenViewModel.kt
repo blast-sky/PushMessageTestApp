@@ -9,7 +9,7 @@ import com.example.pushmessagetestapp.data.local.SharedPreferencesUserUtil
 import com.example.pushmessagetestapp.domain.interactor.GetChatMessagesInteractor
 import com.example.pushmessagetestapp.domain.interactor.SendMessageInteractor
 import com.example.pushmessagetestapp.domain.model.Message
-import com.example.pushmessagetestapp.util.Resource
+import com.example.pushmessagetestapp.common.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -32,7 +32,7 @@ class ChatScreenViewModel @Inject constructor(
                 messages = Resource.Success(loadedMessages.sortedBy { message -> message.created })
             }
         } catch (e: Exception) {
-            messages = Resource.Error(e)
+            messages = Resource.Error(message = e.stackTraceToString())
         }
     }
 

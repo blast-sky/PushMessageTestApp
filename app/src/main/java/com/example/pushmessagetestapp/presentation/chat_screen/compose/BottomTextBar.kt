@@ -49,7 +49,10 @@ fun BottomTextBar(bottomSize: MutableState<Dp>, onMessageButtonClick: (String) -
                 contentDescription = "message button",
                 tint = MaterialTheme.colors.onSurface,
                 modifier = Modifier
-                    .clickable(onClick = { onMessageButtonClick(message) })
+                    .clickable(onClick = {
+                        onMessageButtonClick(message)
+                        message = ""
+                    })
             )
         }
     )

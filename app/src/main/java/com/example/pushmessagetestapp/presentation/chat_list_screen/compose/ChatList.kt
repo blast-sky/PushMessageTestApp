@@ -1,4 +1,4 @@
-package com.example.pushmessagetestapp.presentation.main_screen.compose
+package com.example.pushmessagetestapp.presentation.chat_list_screen.compose
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -15,7 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import com.example.pushmessagetestapp.R
 import com.example.pushmessagetestapp.domain.model.Chat
-import com.example.pushmessagetestapp.util.Resource
+import com.example.pushmessagetestapp.common.Resource
 
 @Composable
 fun ChatList(chats: Resource<List<Chat>>, onChatClicked: (String) -> Unit) {

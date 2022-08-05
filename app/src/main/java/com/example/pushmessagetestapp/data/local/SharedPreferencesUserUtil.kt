@@ -1,11 +1,12 @@
 package com.example.pushmessagetestapp.data.local
 
 import android.content.SharedPreferences
+import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
 import javax.inject.Named
 import javax.inject.Singleton
 
-@Singleton
+@ViewModelScoped
 class SharedPreferencesUserUtil @Inject constructor(
     @Named("Login") private val sharedPreferences: SharedPreferences
 ) {
@@ -19,15 +20,10 @@ class SharedPreferencesUserUtil @Inject constructor(
     var name by SharedPreferenceDelegate.String(sharedPreferences, NAME, "")
 
     fun register(userId: String, name: String) {
-        require(!isLogin)
+        require(!isLogin) { "User must be unloged when use SharedPreferencesUserUtil::register" }
         this.userId = userId
         this.name = name
         this.isLogin = true
-    }
-
-    fun rename(newName: String) {
-        require(isLogin)
-        name = newName
     }
 
     private companion object {

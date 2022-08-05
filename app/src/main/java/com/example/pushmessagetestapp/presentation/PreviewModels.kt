@@ -7,7 +7,7 @@ import java.util.*
 
 object PreviewModels {
 
-    val date = Calendar.getInstance().let {
+    val date: Date = Calendar.getInstance().let {
         it.set(2020, 7, 14, 17, 31)
         it.time
     }

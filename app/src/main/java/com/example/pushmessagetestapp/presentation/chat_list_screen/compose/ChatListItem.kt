@@ -1,4 +1,4 @@
-package com.example.pushmessagetestapp.presentation.main_screen.compose
+package com.example.pushmessagetestapp.presentation.chat_list_screen.compose
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*

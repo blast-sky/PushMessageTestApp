@@ -1,13 +1,11 @@
 package com.example.pushmessagetestapp.data.remote
 
-import com.example.pushmessagetestapp.util.suspend
 import com.google.firebase.messaging.FirebaseMessaging
+import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
+@ViewModelScoped
 class MessagingUtil @Inject constructor() {
 
     suspend fun getToken(): String = FirebaseMessaging.getInstance().token.suspend()
-
 }

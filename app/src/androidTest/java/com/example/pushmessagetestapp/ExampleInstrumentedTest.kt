@@ -5,6 +5,7 @@ package com.example.pushmessagetestapp
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.example.pushmessagetestapp.data.dto.MessageDto
+import com.example.pushmessagetestapp.data.mapper.dto.toMessage
 import com.example.pushmessagetestapp.data.remote.StoreUtil
 import com.google.firebase.firestore.ktx.toObject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -28,10 +29,13 @@ class ExampleInstrumentedTest {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
 
-        StoreUtil(appContext).getChatMessagesFlow("3HtpyL0b4RrUZbexs4yg").take(1).collect { message ->
-            assertTrue(message.isNotEmpty())
-            assertEquals(message.first().toObject<MessageDto>()?.message, "hi")
-        }
+        StoreUtil()
+            .getMessagesFlow("3HtpyL0b4RrUZbexs4yg")
+            .take(1)
+            .collect { message ->
+                assertTrue(message.isNotEmpty())
+                assertEquals(message.first().toMessage()?.message, "hi")
+            }
 
         assertEquals("com.example.pushmessagetestapp", appContext.packageName)
     }

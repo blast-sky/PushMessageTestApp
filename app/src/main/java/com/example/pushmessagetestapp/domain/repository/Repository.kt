@@ -14,4 +14,6 @@ interface Repository {
     suspend fun getChatMessages(chatId: String): Flow<List<Message>>
 
     suspend fun sendMessage(chatId: String, message: String, fromId: String): String
+
+    suspend fun createChat(chat: Chat): String
 }

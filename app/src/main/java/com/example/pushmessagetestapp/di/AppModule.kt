@@ -2,6 +2,7 @@ package com.example.pushmessagetestapp.di
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.res.Resources
 import com.example.pushmessagetestapp.data.repository.DefaultRepository
 import com.example.pushmessagetestapp.domain.repository.Repository
 import dagger.Binds
@@ -23,9 +24,17 @@ class AppModule {
     fun provideSharedPreference(@ApplicationContext context: Context): SharedPreferences =
         context.getSharedPreferences(LOGIN_PREFERENCES, Context.MODE_PRIVATE)
 
+    @Singleton
+    @Provides
+    fun provideResource(@ApplicationContext context: Context): Resources =
+        context.resources
+
+
     private companion object {
         const val LOGIN_PREFERENCES = "LOGIN_SHARED_PREFERENCES"
     }
+
+
 }
 
 @Module

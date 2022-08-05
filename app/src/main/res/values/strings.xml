@@ -3,4 +3,6 @@
     <string name="no_chats">No chats</string>
     <string name="enter_message">Enter message</string>
     <string name="no_messages">No messages</string>
+    <string name="login_error">Can\'t login.</string>
+    <string name="chat_load_error">Can\'t load chats.</string>
 </resources>

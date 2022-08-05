@@ -5,7 +5,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import com.example.pushmessagetestapp.presentation.navigation.mainGraph
+import com.example.pushmessagetestapp.presentation.navigation.Graphs
+import com.example.pushmessagetestapp.presentation.navigation.graph.loginGraph
+import com.example.pushmessagetestapp.presentation.navigation.graph.mainGraph
 import com.example.pushmessagetestapp.presentation.ui.theme.PushMessageTestAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,9 +20,12 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 NavHost(
                     navController = navController,
-                    startDestination = "mainGraph"
+                    startDestination = Graphs.MainGraph.graphName,
                 ) {
-                    mainGraph(navController)
+                    mainGraph(
+                        navController = navController,
+                        routeName = Graphs.MainGraph.graphName,
+                    )
                 }
             }
         }
