@@ -18,8 +18,10 @@ fun NavGraphBuilder.mainGraph(navController: NavController, routeName: String) =
             val viewModel = hiltViewModel<ChatListScreenViewModel>()
             ChatListScreen(
                 chats = viewModel.chats,
+                availableUsers = viewModel.availableUsers,
                 onChatClicked = { chatId -> navController.navigate(Screens.Chat.route + "/$chatId") },
-                onFloatingActionButtonClicked = { TODO() },
+                createChat = viewModel::createChat,
+                loadAvailableUsers = viewModel::loadAvailableUsers
             )
         }
 

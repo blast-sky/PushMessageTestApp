@@ -22,7 +22,7 @@ fun LoginScreen(
     onLoginSuccess: () -> Unit
 ) {
     when (isLogin) {
-        is Resource.Created, is Resource.Loading -> CircularProgressIndicator()
+        is Resource.Loading -> CircularProgressIndicator()
         is Resource.Error -> TODO()
         is Resource.Success -> {
             if (isLogin.value) {

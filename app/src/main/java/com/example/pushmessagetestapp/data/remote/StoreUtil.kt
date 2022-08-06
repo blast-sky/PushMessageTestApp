@@ -1,6 +1,5 @@
 package com.example.pushmessagetestapp.data.remote
 
-import android.content.Context
 import com.example.pushmessagetestapp.data.dto.ChatDto
 import com.example.pushmessagetestapp.data.dto.MessageDto
 import com.example.pushmessagetestapp.data.dto.UserDto
@@ -10,12 +9,12 @@ import com.example.pushmessagetestapp.data.mapper.raw.toUserDto
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
-import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.android.scopes.ActivityRetainedScoped
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-@ViewModelScoped
+@ActivityRetainedScoped
 class StoreUtil @Inject constructor() {
 
     private val firebaseFirestore by lazy {
@@ -76,6 +75,12 @@ class StoreUtil @Inject constructor() {
         chatsCollectionReference
             .add(chatDto)
             .suspend()
+
+    suspend fun getAllUser(): List<UserDto> =
+        usersCollectionReference
+            .get()
+            .suspend()
+            .map(DocumentSnapshot::toUserDto)
 
     fun getMessagesFlow(chatId: String): Flow<List<MessageDto>> =
         getChatReferenceById(chatId)

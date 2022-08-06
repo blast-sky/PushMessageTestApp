@@ -3,7 +3,9 @@ package com.example.pushmessagetestapp.presentation.chat_screen.compose
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowRight
@@ -49,6 +51,7 @@ fun BottomTextBar(bottomSize: MutableState<Dp>, onMessageButtonClick: (String) -
                 contentDescription = "message button",
                 tint = MaterialTheme.colors.onSurface,
                 modifier = Modifier
+                    .size(46.dp)
                     .clickable(onClick = {
                         onMessageButtonClick(message)
                         message = ""

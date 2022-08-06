@@ -1,12 +1,13 @@
 package com.example.pushmessagetestapp.data.local
 
 import android.content.SharedPreferences
+import dagger.hilt.android.scopes.ActivityRetainedScoped
 import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
 import javax.inject.Named
 import javax.inject.Singleton
 
-@ViewModelScoped
+@ActivityRetainedScoped
 class SharedPreferencesUserUtil @Inject constructor(
     @Named("Login") private val sharedPreferences: SharedPreferences
 ) {

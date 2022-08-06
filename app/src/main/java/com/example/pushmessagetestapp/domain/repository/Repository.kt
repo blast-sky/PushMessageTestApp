@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface Repository {
 
-    suspend fun getUserChats(userId: String): List<Chat>
+    suspend fun getUserChats(userId: String): Flow<List<Chat>>
 
     suspend fun addNewUser(user: User): String
 
@@ -16,4 +16,6 @@ interface Repository {
     suspend fun sendMessage(chatId: String, message: String, fromId: String): String
 
     suspend fun createChat(chat: Chat): String
+
+    suspend fun getAvailableUsers(userId: String): List<User>
 }

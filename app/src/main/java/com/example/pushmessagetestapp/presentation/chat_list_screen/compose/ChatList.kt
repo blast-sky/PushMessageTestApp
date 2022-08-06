@@ -21,7 +21,7 @@ import com.example.pushmessagetestapp.common.Resource
 fun ChatList(chats: Resource<List<Chat>>, onChatClicked: (String) -> Unit) {
 
     when (chats) {
-        is Resource.Created, is Resource.Loading -> ChatListLoading()
+        is Resource.Loading -> ChatListLoading()
         is Resource.Error -> ChatListError()
         is Resource.Success -> ChatListSuccess(chats.value, onChatClicked)
     }

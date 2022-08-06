@@ -3,11 +3,11 @@ package com.example.pushmessagetestapp.data.remote
 import com.example.pushmessagetestapp.R
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.scopes.ActivityRetainedScoped
 import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@ViewModelScoped
+@ActivityRetainedScoped
 class SignInUtil @Inject constructor(
     private val fireStoreUtil: StoreUtil
 ) {

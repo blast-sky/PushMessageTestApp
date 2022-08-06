@@ -31,7 +31,7 @@ fun ChatScreen(
         val bottomSize = remember { mutableStateOf(20.dp) }
 
         when (messages) {
-            is Resource.Created, is Resource.Loading -> ChatScreenLoading()
+            is Resource.Loading -> ChatScreenLoading()
             is Resource.Error -> TODO()
             is Resource.Success -> MessageList(
                 messages = messages.value,
