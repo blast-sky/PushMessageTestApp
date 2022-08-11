@@ -1,24 +1,23 @@
 package com.example.pushmessagetestapp.presentation.chat_list_screen
 
-import android.content.res.Resources
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.pushmessagetestapp.R
 import com.example.pushmessagetestapp.common.Resource
-import com.example.pushmessagetestapp.common.Result
 import com.example.pushmessagetestapp.data.local.SharedPreferencesUserUtil
 import com.example.pushmessagetestapp.domain.model.Chat
 import com.example.pushmessagetestapp.domain.model.User
+import com.example.pushmessagetestapp.domain.repository.Resources
 import com.example.pushmessagetestapp.domain.use_case.CreateChatWithMeUseCase
 import com.example.pushmessagetestapp.domain.use_case.GetAvailableUsersUseCase
 import com.example.pushmessagetestapp.domain.use_case.GetUserChatsUseCase
 import com.example.pushmessagetestapp.presentation.loadFlowableResource
 import com.example.pushmessagetestapp.presentation.loadResource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -43,14 +42,14 @@ class ChatListScreenViewModel @Inject constructor(
     }
 
     fun loadAvailableUsers() = loadResource(
-        errorMessage = resources.getString(R.string.get_available_users_error),
-        loader = { getAvailableUsersUseCase() }
+        errorMessage = resources.loadAvailableUsersError,
+        loader = getAvailableUsersUseCase::invoke
     )
         .onEach { availableUsers = it }
         .launchIn(viewModelScope)
 
     private fun loadChats() = loadFlowableResource(
-        errorMessage = "",
+        errorMessage = resources.loadChatError,
         loader = { getUserChatsUseCase(sharedPreferencesUserUtil.userId) },
     )
         .onEach { chats = it }

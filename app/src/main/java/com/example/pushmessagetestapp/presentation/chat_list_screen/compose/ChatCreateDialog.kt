@@ -1,6 +1,5 @@
 package com.example.pushmessagetestapp.presentation.chat_list_screen.compose
 
-import android.icu.util.UniversalTimeScale
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -9,14 +8,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
+import com.example.pushmessagetestapp.R
 import com.example.pushmessagetestapp.common.Resource
 import com.example.pushmessagetestapp.domain.model.Chat
 import com.example.pushmessagetestapp.domain.model.User
-import com.example.pushmessagetestapp.presentation.ui.theme.lightBlue
 
 @Composable
 fun ChatCreateDialog(
@@ -88,12 +87,10 @@ private fun ChatCreateDialogSuccess(
         Text(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(50.dp)
                 .clickable { setExpanded(true) }
                 .background(color = Color.LightGray),
             text = users.getOrNull(selectedIndex)?.name ?: "Select user\nPress there",
             textAlign = TextAlign.Center,
-
         )
 
         DropdownMenu(
@@ -101,9 +98,15 @@ private fun ChatCreateDialogSuccess(
             expanded = expanded,
             onDismissRequest = { setExpanded.invoke(false) },
         ) {
+            if (users.isEmpty()) {
+                DropdownMenuItem(onClick = { }) {
+                    Text(text = stringResource(R.string.no_available_users))
+                }
+            }
+
             users.forEachIndexed { index, user ->
                 val backgroundColor = if (index == selectedIndex)
-                    MaterialTheme.colors.lightBlue
+                    MaterialTheme.colors.secondaryVariant
                 else
                     MaterialTheme.colors.surface
 

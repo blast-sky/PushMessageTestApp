@@ -10,6 +10,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -23,10 +24,13 @@ fun LoginScreen(
 ) {
     when (isLogin) {
         is Resource.Loading -> CircularProgressIndicator()
-        is Resource.Error -> TODO()
+        is Resource.Error -> Text(text = isLogin.message)
         is Resource.Success -> {
             if (isLogin.value) {
-                onLoginSuccess.invoke()
+                val context = LocalContext.current
+                LaunchedEffect(key1 = context) {
+                    onLoginSuccess.invoke()
+                }
             } else {
                 var name by rememberSaveable { mutableStateOf("") }
 

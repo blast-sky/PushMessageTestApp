@@ -13,7 +13,7 @@ import com.example.pushmessagetestapp.presentation.navigation.Screens
 
 
 fun NavGraphBuilder.mainGraph(navController: NavController, routeName: String) =
-    navigation(Screens.Main.route, routeName) {
+    navigation(Screens.Login.route, routeName) {
         composable(route = Screens.Main.route) {
             val viewModel = hiltViewModel<ChatListScreenViewModel>()
             ChatListScreen(

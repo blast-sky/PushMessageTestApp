@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.example.pushmessagetestapp.presentation.navigation.Graphs
-import com.example.pushmessagetestapp.presentation.navigation.graph.loginGraph
 import com.example.pushmessagetestapp.presentation.navigation.graph.mainGraph
 import com.example.pushmessagetestapp.presentation.ui.theme.PushMessageTestAppTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,10 +21,7 @@ class MainActivity : ComponentActivity() {
                     navController = navController,
                     startDestination = Graphs.MainGraph.graphName,
                 ) {
-                    mainGraph(
-                        navController = navController,
-                        routeName = Graphs.MainGraph.graphName,
-                    )
+                    mainGraph(navController, Graphs.MainGraph.graphName)
                 }
             }
         }
