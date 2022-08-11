@@ -9,7 +9,7 @@ interface Repository {
 
     suspend fun getUserChats(userId: String): Flow<List<Chat>>
 
-    suspend fun addNewUser(user: User): String
+    suspend fun registerNewUser(user: User): String
 
     suspend fun getChatMessages(chatId: String): Flow<List<Message>>
 
@@ -18,4 +18,10 @@ interface Repository {
     suspend fun createChat(chat: Chat): String
 
     suspend fun getAvailableUsers(userId: String): List<User>
+
+    suspend fun getMessagingToken(): String
+
+    val userId: String
+
+    val isLogin: Boolean
 }

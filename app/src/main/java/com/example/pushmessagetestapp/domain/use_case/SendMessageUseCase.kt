@@ -7,7 +7,9 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @ActivityRetainedScoped
-class SendMessageUseCase @Inject constructor(private val repository: Repository) {
+class SendMessageUseCase @Inject constructor(
+    private val repository: Repository
+) {
 
     suspend operator fun invoke(chatId: String, message: String, fromId: String) =
         repository.sendMessage(chatId, message, fromId)

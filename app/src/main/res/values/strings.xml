@@ -6,4 +6,5 @@
     <string name="login_error">Can\'t login.</string>
     <string name="chat_load_error">Can\'t load chats.</string>
     <string name="get_available_users_error">Couldn\'t load available users</string>
+    <string name="no_available_users">No available users.</string>
 </resources>
