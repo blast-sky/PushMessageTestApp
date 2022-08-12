@@ -41,5 +41,4 @@ class AppModule {
         @Binds
         fun bindResources(impl: AndroidResources): com.example.pushmessagetestapp.domain.repository.Resources
     }
-
 }

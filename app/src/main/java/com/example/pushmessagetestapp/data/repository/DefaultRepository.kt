@@ -1,5 +1,6 @@
 package com.example.pushmessagetestapp.data.repository
 
+import android.util.Log
 import com.example.pushmessagetestapp.data.dto.MessageDto
 import com.example.pushmessagetestapp.data.dto.UserDto
 import com.example.pushmessagetestapp.data.local.SharedPreferencesUserUtil
@@ -43,14 +44,24 @@ class DefaultRepository @Inject constructor(
     override suspend fun registerNewUser(user: User): String =
         storeUtil
             .addNewUser(user.toDto())
-            .id.apply {
-                if (isNotBlank()) sharedPreferencesUserUtil.register(this, user.name)
+            .id.also { id ->
+                if (id.isNotBlank()) sharedPreferencesUserUtil.register(id, user.name)
             }
 
     override suspend fun sendMessage(chatId: String, message: String, fromId: String): String =
         storeUtil
             .addNewMessage(chatId, MessageDto(message = message, from = fromId))
-            .id
+            .id.also { _ ->
+                val chat = storeUtil.getChat(chatId)
+                val userIds = chat.users.filter { id -> id != fromId }
+                userIds.forEach { id ->
+                    val messageToken = storeUtil.getUserById(id).messageToken
+                    val myName = sharedPreferencesUserUtil.name
+                    val response = messagingUtil.sendMessage(messageToken, message, myName)
+                    Log.d("Tag", response.toString())
+                    Log.d("Tag", response.body()?.messageId.toString())
+                }
+            }
 
     override suspend fun createChat(chat: Chat): String =
         storeUtil

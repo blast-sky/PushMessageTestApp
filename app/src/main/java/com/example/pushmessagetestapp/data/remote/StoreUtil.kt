@@ -31,18 +31,26 @@ class StoreUtil @Inject constructor() {
     private fun getChatReferenceById(chatId: String) = chatsCollectionReference.document(chatId)
 
     private companion object {
+        const val MESSAGE_TOKEN = "messageToken"
         const val CHAT_COLLECTION = "chats"
         const val MESSAGE_COLLECTION = "messages"
         const val USERS_COLLECTION = "users"
         const val USERS_FIELD_IN_CHAT = "users"
     }
 
-    suspend fun getUserChats(userId: String): List<ChatDto> =
+    suspend fun getChats(userId: String): List<ChatDto> =
         chatsCollectionReference
             .whereArrayContains(USERS_FIELD_IN_CHAT, userId)
             .get()
             .suspend()
             .map(DocumentSnapshot::toChatDto)
+
+    suspend fun getChat(chatId: String): ChatDto =
+        chatsCollectionReference
+            .document(chatId)
+            .get()
+            .suspend()
+            .toChatDto()
 
     suspend fun getChatMessages(chatId: String): List<MessageDto> =
         getChatReferenceById(chatId)
