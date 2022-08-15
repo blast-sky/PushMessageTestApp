@@ -1,34 +1,42 @@
 package com.example.pushmessagetestapp.presentation.chat_list_screen.compose
 
 
-import android.icu.util.UniversalTimeScale
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.*
+import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.pushmessagetestapp.domain.model.Chat
 import com.example.pushmessagetestapp.common.Resource
+import com.example.pushmessagetestapp.domain.model.Chat
 import com.example.pushmessagetestapp.domain.model.User
+import com.example.pushmessagetestapp.presentation.chat_list_screen.model.ChatPresenterModel
+import com.example.pushmessagetestapp.presentation.common.TopAppBar
 
 @Composable
 fun ChatListScreen(
     availableUsers: Resource<List<User>>,
-    chats: Resource<List<Chat>>,
+    chats: Resource<List<ChatPresenterModel>>,
     loadAvailableUsers: () -> Unit,
-    onChatClicked: (String) -> Unit,
+    onChatClicked: (String, String) -> Unit,
     createChat: (chat: Chat) -> Unit
 ) {
-    var chatCreateDialogOpened by remember { mutableStateOf(false) }
+    var chatCreateDialogOpened by rememberSaveable { mutableStateOf(false) }
 
     Scaffold(
-        floatingActionButton = { AddChatFloatingButton {
-            chatCreateDialogOpened = true
-            loadAvailableUsers.invoke()
-        } },
+        floatingActionButton = {
+            AddChatFloatingButton {
+                chatCreateDialogOpened = true
+                loadAvailableUsers.invoke()
+            }
+        },
+        topBar = { TopAppBar(title = "Chats") } // TODO extract resource
     ) {
         if (chatCreateDialogOpened) {
             ChatCreateDialog(

@@ -11,7 +11,6 @@ class GetAvailableUsersUseCase @Inject constructor(
 ) {
 
     suspend operator fun invoke(): List<User> =
-        repository.getAvailableUsers(repository.userId).toMutableList().apply {
-            removeIf { user -> user.id == repository.userId }
-        }
+        repository.getAvailableUsers(repository.userId)
+            .filter { user -> user.id != repository.userId }
 }

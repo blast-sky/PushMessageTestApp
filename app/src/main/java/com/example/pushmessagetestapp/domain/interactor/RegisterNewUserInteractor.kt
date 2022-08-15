@@ -1,4 +1,4 @@
-package com.example.pushmessagetestapp.domain.use_case
+package com.example.pushmessagetestapp.domain.interactor
 
 import com.example.pushmessagetestapp.common.Resource
 import com.example.pushmessagetestapp.domain.model.User
@@ -8,7 +8,7 @@ import dagger.hilt.android.scopes.ActivityRetainedScoped
 import javax.inject.Inject
 
 @ActivityRetainedScoped
-class RegisterNewUserUseCase @Inject constructor(
+class RegisterNewUserInteractor @Inject constructor(
     private val resources: Resources,
     private val repository: Repository,
 ) {

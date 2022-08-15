@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.pushmessagetestapp.common.Resource
 import com.example.pushmessagetestapp.data.local.SharedPreferencesUserUtil
 import com.example.pushmessagetestapp.domain.model.Message
+import com.example.pushmessagetestapp.domain.repository.Repository
 import com.example.pushmessagetestapp.domain.repository.Resources
 import com.example.pushmessagetestapp.domain.use_case.GetChatMessagesUseCase
 import com.example.pushmessagetestapp.domain.use_case.SendMessageUseCase
@@ -23,17 +24,15 @@ class ChatScreenViewModel @Inject constructor(
     private val resources: Resources,
     private val getChatMessagesUseCase: GetChatMessagesUseCase,
     private val sendMessageUseCase: SendMessageUseCase,
-    sharedPreferencesUtils: SharedPreferencesUserUtil,
+    repository: Repository, // TODO remove
 ) : ViewModel() {
 
     var messages by mutableStateOf<Resource<List<Message>>>(Resource.Loading())
-
-    val userId = sharedPreferencesUtils.userId
+    val userId = repository.userId
 
     fun loadMessages(chatId: String) = loadFlowableResource(
         errorMessage = resources.loadChatError,
         loader = { getChatMessagesUseCase(chatId) },
-        transformation = { list -> list.sortedBy { message -> message.created }}
     )
         .onEach { messages = it }
         .launchIn(viewModelScope)
@@ -42,7 +41,6 @@ class ChatScreenViewModel @Inject constructor(
         sendMessageUseCase(
             chatId = chatId,
             message = message,
-            fromId = userId
         )
     }
 }

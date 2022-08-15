@@ -6,13 +6,16 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pushmessagetestapp.common.Resource
-import com.example.pushmessagetestapp.data.local.SharedPreferencesUserUtil
+import com.example.pushmessagetestapp.common.map
 import com.example.pushmessagetestapp.domain.model.Chat
 import com.example.pushmessagetestapp.domain.model.User
+import com.example.pushmessagetestapp.domain.repository.Repository
 import com.example.pushmessagetestapp.domain.repository.Resources
 import com.example.pushmessagetestapp.domain.use_case.CreateChatWithMeUseCase
 import com.example.pushmessagetestapp.domain.use_case.GetAvailableUsersUseCase
 import com.example.pushmessagetestapp.domain.use_case.GetUserChatsUseCase
+import com.example.pushmessagetestapp.presentation.chat_list_screen.mapper.toChatPresenterModel
+import com.example.pushmessagetestapp.presentation.chat_list_screen.model.ChatPresenterModel
 import com.example.pushmessagetestapp.presentation.loadFlowableResource
 import com.example.pushmessagetestapp.presentation.loadResource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,13 +27,13 @@ import javax.inject.Inject
 @HiltViewModel
 class ChatListScreenViewModel @Inject constructor(
     private val resources: Resources,
-    private val sharedPreferencesUserUtil: SharedPreferencesUserUtil,
+    private val repository: Repository,
     private val createChatWithMeUseCase: CreateChatWithMeUseCase,
     private val getUserChatsUseCase: GetUserChatsUseCase,
     private val getAvailableUsersUseCase: GetAvailableUsersUseCase,
 ) : ViewModel() {
 
-    var chats: Resource<List<Chat>> by mutableStateOf(Resource.Loading())
+    var chats: Resource<List<ChatPresenterModel>> by mutableStateOf(Resource.Loading())
     var availableUsers: Resource<List<User>> by mutableStateOf(Resource.Loading())
 
     init {
@@ -38,7 +41,7 @@ class ChatListScreenViewModel @Inject constructor(
     }
 
     fun createChat(chat: Chat) = viewModelScope.launch {
-        createChatWithMeUseCase(chat)
+        createChatWithMeUseCase.invoke(chat)
     }
 
     fun loadAvailableUsers() = loadResource(
@@ -50,8 +53,14 @@ class ChatListScreenViewModel @Inject constructor(
 
     private fun loadChats() = loadFlowableResource(
         errorMessage = resources.loadChatError,
-        loader = { getUserChatsUseCase(sharedPreferencesUserUtil.userId) },
+        loader = { getUserChatsUseCase.invoke() },
     )
-        .onEach { chats = it }
+        .onEach { chatResource ->
+            chats = chatResource.map { chatList ->
+                chatList.map { chat ->
+                    chat.toChatPresenterModel(repository.myUser)
+                }
+            }
+        }
         .launchIn(viewModelScope)
 }

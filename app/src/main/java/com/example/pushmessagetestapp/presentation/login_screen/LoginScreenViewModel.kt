@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.pushmessagetestapp.common.Resource
 import com.example.pushmessagetestapp.data.local.SharedPreferencesUserUtil
 import com.example.pushmessagetestapp.domain.repository.Resources
-import com.example.pushmessagetestapp.domain.use_case.RegisterNewUserUseCase
+import com.example.pushmessagetestapp.domain.interactor.RegisterNewUserInteractor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
@@ -17,7 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginScreenViewModel @Inject constructor(
     private val resources: Resources,
-    private val registerNewUserUseCase: RegisterNewUserUseCase,
+    private val registerNewUserInteractor: RegisterNewUserInteractor,
     sharedPreferencesUserUtil: SharedPreferencesUserUtil,
 ) : ViewModel() {
 
@@ -28,6 +28,6 @@ class LoginScreenViewModel @Inject constructor(
     }
 
     fun register(name: String) = viewModelScope.launch(handler) {
-        isLogin = registerNewUserUseCase.invoke(name)
+        isLogin = registerNewUserInteractor.invoke(name)
     }
 }

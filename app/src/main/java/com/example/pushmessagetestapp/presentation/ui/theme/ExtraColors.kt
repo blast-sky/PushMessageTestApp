@@ -4,4 +4,7 @@ import androidx.compose.material.Colors
 import androidx.compose.ui.graphics.Color
 
 val Colors.lightBlue: Color
-    get() = Color(0x89D1FE)
+    get() = Color(0xFF89D1FE)
+
+val Colors.lightGray: Color
+    get() = Color.Gray

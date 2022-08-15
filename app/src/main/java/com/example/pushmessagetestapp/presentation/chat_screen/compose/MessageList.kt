@@ -18,8 +18,7 @@ import com.example.pushmessagetestapp.R
 import com.example.pushmessagetestapp.domain.model.Message
 
 @Composable
-fun MessageList(messages: List<Message>, myUserId: String, bottomSize: Dp) {
-    val screenHeight = LocalConfiguration.current.screenHeightDp.dp
+fun MessageList(messages: List<Message>, myUserId: String, modifier: Modifier = Modifier) {
     val lazyListState = rememberLazyListState()
 
     LaunchedEffect(messages) {
@@ -30,7 +29,7 @@ fun MessageList(messages: List<Message>, myUserId: String, bottomSize: Dp) {
 
     LazyColumn(
         state = lazyListState,
-        modifier = Modifier.sizeIn(maxHeight = screenHeight - bottomSize)
+        modifier = modifier.fillMaxSize()
     ) {
         if (messages.isEmpty()) {
             item {

@@ -22,48 +22,52 @@ import androidx.compose.ui.unit.dp
 import com.example.pushmessagetestapp.R
 
 @Composable
-fun BottomTextBar(bottomSize: MutableState<Dp>, onMessageButtonClick: (String) -> Unit) {
+fun BottomTextBar(onMessageButtonClick: (String) -> Unit) {
     var message by rememberSaveable { mutableStateOf("") }
-    val localDensity = LocalDensity.current
-    TextField(
-        modifier = Modifier
-            .onSizeChanged { bottomSize.value = with(localDensity) { it.height.toDp() } }
-            .fillMaxWidth()
-            .defaultMinSize(minHeight = 46.dp)
-            .background(color = MaterialTheme.colors.surface),
-        value = message,
-        onValueChange = { message = it },
-        placeholder = {
-            Text(text = stringResource(R.string.enter_message))
-        },
-        maxLines = 3,
-        colors = TextFieldDefaults.textFieldColors(
-            textColor = Color.Gray,
-            disabledTextColor = Color.Transparent,
-            backgroundColor = Color.White,
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent,
-            disabledIndicatorColor = Color.Transparent
-        ),
-        trailingIcon = {
-            Icon(
-                imageVector = Icons.Default.KeyboardArrowRight,
-                contentDescription = "message button",
-                tint = MaterialTheme.colors.onSurface,
-                modifier = Modifier
-                    .size(46.dp)
-                    .clickable(onClick = {
-                        onMessageButtonClick(message)
-                        message = ""
-                    })
-            )
-        }
-    )
+    Card(
+        shape = MaterialTheme.shapes.large,
+        backgroundColor = MaterialTheme.colors.background,
+        elevation = 10.dp,
+    ) {
+        TextField(
+            modifier = Modifier
+                .fillMaxWidth()
+                .defaultMinSize(minHeight = 46.dp)
+                .background(color = MaterialTheme.colors.surface),
+            value = message,
+            onValueChange = { message = it },
+            placeholder = {
+                Text(text = stringResource(R.string.enter_message))
+            },
+            maxLines = 3,
+            colors = TextFieldDefaults.textFieldColors(
+                textColor = Color.Gray,
+                disabledTextColor = Color.Transparent,
+                backgroundColor = Color.White,
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                disabledIndicatorColor = Color.Transparent
+            ),
+            trailingIcon = {
+                Icon(
+                    imageVector = Icons.Default.KeyboardArrowRight,
+                    contentDescription = "message button",
+                    tint = MaterialTheme.colors.onSurface,
+                    modifier = Modifier
+                        .size(46.dp)
+                        .clickable(onClick = {
+                            onMessageButtonClick(message)
+                            message = ""
+                        })
+                )
+            }
+        )
+    }
 }
 
 @Preview("BottomTextBarPreview")
 @Composable
 fun BottomTextBarPreview() {
-    BottomTextBar(mutableStateOf(10.dp)) {}
+    BottomTextBar {}
 }
 

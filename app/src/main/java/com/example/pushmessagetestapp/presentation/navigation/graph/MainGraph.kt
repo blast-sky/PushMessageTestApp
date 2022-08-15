@@ -19,24 +19,30 @@ fun NavGraphBuilder.mainGraph(navController: NavController, routeName: String) =
             ChatListScreen(
                 chats = viewModel.chats,
                 availableUsers = viewModel.availableUsers,
-                onChatClicked = { chatId -> navController.navigate(Screens.Chat.route + "/$chatId") },
+                onChatClicked = { chatId, chatTitle -> navController.navigate("${Screens.Chat.route}/$chatId/$chatTitle") },
                 createChat = viewModel::createChat,
                 loadAvailableUsers = viewModel::loadAvailableUsers
             )
         }
 
         val chatIdArgName = "chatId"
+        val chatTitleArgName = "chatTitle"
         composable(
-            route = Screens.Chat.route + "/{$chatIdArgName}",
-            arguments = listOf(navArgument(chatIdArgName) { type = NavType.StringType })
+            route = Screens.Chat.route + "/{$chatIdArgName}/{$chatTitleArgName}",
+            arguments = listOf(
+                navArgument(chatIdArgName) { type = NavType.StringType },
+                navArgument(chatTitleArgName) { type = NavType.StringType }
+            )
         ) {
             val viewModel = hiltViewModel<ChatScreenViewModel>()
             ChatScreen(
-                chatId = it.arguments?.getString(chatIdArgName)!!,
+                chatId = it.arguments!!.getString(chatIdArgName)!!,
+                chatTitle = it.arguments!!.getString(chatTitleArgName)!!,
                 myUserId = viewModel.userId,
                 messages = viewModel.messages,
                 loadMessage = viewModel::loadMessages,
                 sendMessage = viewModel::sendMessage,
+                goBack = navController::popBackStack
             )
         }
 

@@ -24,4 +24,9 @@ class MessagingUtil @Inject constructor(
                 )
             )
         )
+
+    suspend fun sendMessages(messageTokens: List<String>, message: String, title: String) =
+        messageTokens.forEach { token ->
+            sendMessage(token, message, title)
+        }
 }

@@ -1,6 +1,5 @@
 package com.example.pushmessagetestapp.data.repository
 
-import android.util.Log
 import com.example.pushmessagetestapp.data.dto.MessageDto
 import com.example.pushmessagetestapp.data.dto.UserDto
 import com.example.pushmessagetestapp.data.local.SharedPreferencesUserUtil
@@ -48,20 +47,30 @@ class DefaultRepository @Inject constructor(
                 if (id.isNotBlank()) sharedPreferencesUserUtil.register(id, user.name)
             }
 
-    override suspend fun sendMessage(chatId: String, message: String, fromId: String): String =
+    override suspend fun createMessage(chatId: String, message: String): String =
         storeUtil
-            .addNewMessage(chatId, MessageDto(message = message, from = fromId))
-            .id.also { _ ->
-                val chat = storeUtil.getChat(chatId)
-                val userIds = chat.users.filter { id -> id != fromId }
-                userIds.forEach { id ->
-                    val messageToken = storeUtil.getUserById(id).messageToken
-                    val myName = sharedPreferencesUserUtil.name
-                    val response = messagingUtil.sendMessage(messageToken, message, myName)
-                    Log.d("Tag", response.toString())
-                    Log.d("Tag", response.body()?.messageId.toString())
-                }
+            .addNewMessage(chatId, MessageDto(message = message, from = userId))
+            .id
+
+    override suspend fun sendMessage(userId: String, message: String): Unit =
+        storeUtil
+            .getUserById(userId)
+            .messageToken
+            .let { token ->
+                messagingUtil.sendMessage(token, message, name)
             }
+
+
+    override suspend fun getChat(chatId: String): Chat =
+        storeUtil
+            .getChat(chatId)
+            .toChat(storeUtil)
+
+    override suspend fun getOtherUserIdsInChat(chatId: String): List<String> =
+        storeUtil
+            .getChat(chatId)
+            .users
+            .filter { id -> id != userId }
 
     override suspend fun createChat(chat: Chat): String =
         storeUtil
@@ -69,6 +78,9 @@ class DefaultRepository @Inject constructor(
             .id
 
     override suspend fun getMessagingToken(): String = messagingUtil.getToken()
+
+    override val name: String
+        get() = sharedPreferencesUserUtil.name
 
     override val userId: String
         get() = sharedPreferencesUserUtil.userId

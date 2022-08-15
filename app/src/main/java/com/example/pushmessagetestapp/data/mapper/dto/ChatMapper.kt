@@ -9,7 +9,8 @@ import com.example.pushmessagetestapp.domain.model.User
 suspend fun ChatDto.toChat(storeUtil: StoreUtil) = Chat(
     id = id,
     users = users.map { userId -> storeUtil.getUserById(userId).toUser() },
-    messages = storeUtil.getChatMessages(id).map(MessageDto::toMessage),
+    messages = storeUtil.getChatMessages(id).map(MessageDto::toMessage)
+        .sortedBy { message -> message.created },
 )
 
 fun Chat.toDto() = ChatDto(

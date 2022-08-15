@@ -14,11 +14,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import com.example.pushmessagetestapp.R
-import com.example.pushmessagetestapp.domain.model.Chat
 import com.example.pushmessagetestapp.common.Resource
+import com.example.pushmessagetestapp.presentation.chat_list_screen.model.ChatPresenterModel
 
 @Composable
-fun ChatList(chats: Resource<List<Chat>>, onChatClicked: (String) -> Unit) {
+fun ChatList(chats: Resource<List<ChatPresenterModel>>, onChatClicked: (String, String) -> Unit) {
 
     when (chats) {
         is Resource.Loading -> ChatListLoading()
@@ -39,7 +39,7 @@ private fun ChatListLoading() {
 }
 
 @Composable
-private fun ChatListSuccess(chats: List<Chat>, onChatClicked: (String) -> Unit) {
+private fun ChatListSuccess(chats: List<ChatPresenterModel>, onChatClicked: (String, String) -> Unit) {
     LazyColumn(modifier = Modifier) {
         if (chats.isEmpty())
             item {
