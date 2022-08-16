@@ -1,8 +1,8 @@
 package com.example.pushmessagetestapp.data.remote
 
 import com.example.pushmessagetestapp.data.remote.retrofit.MessagingService
-import com.example.pushmessagetestapp.data.remote.retrofit.NotificationInfo
-import com.example.pushmessagetestapp.data.remote.retrofit.SendMessageBody
+import com.example.pushmessagetestapp.data.dto.retrofit.NotificationInfo
+import com.example.pushmessagetestapp.data.dto.retrofit.SendMessageBody
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import javax.inject.Inject

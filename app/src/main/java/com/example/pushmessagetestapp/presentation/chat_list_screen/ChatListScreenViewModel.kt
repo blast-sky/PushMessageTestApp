@@ -12,7 +12,7 @@ import com.example.pushmessagetestapp.domain.model.User
 import com.example.pushmessagetestapp.domain.repository.Repository
 import com.example.pushmessagetestapp.domain.repository.Resources
 import com.example.pushmessagetestapp.domain.use_case.CreateChatWithMeUseCase
-import com.example.pushmessagetestapp.domain.use_case.GetAvailableUsersUseCase
+import com.example.pushmessagetestapp.domain.use_case.GetAvailableUsersForNewChatUseCase
 import com.example.pushmessagetestapp.domain.use_case.GetUserChatsUseCase
 import com.example.pushmessagetestapp.presentation.chat_list_screen.mapper.toChatPresenterModel
 import com.example.pushmessagetestapp.presentation.chat_list_screen.model.ChatPresenterModel
@@ -30,7 +30,7 @@ class ChatListScreenViewModel @Inject constructor(
     private val repository: Repository,
     private val createChatWithMeUseCase: CreateChatWithMeUseCase,
     private val getUserChatsUseCase: GetUserChatsUseCase,
-    private val getAvailableUsersUseCase: GetAvailableUsersUseCase,
+    private val getAvailableUsersForNewChatUseCase: GetAvailableUsersForNewChatUseCase,
 ) : ViewModel() {
 
     var chats: Resource<List<ChatPresenterModel>> by mutableStateOf(Resource.Loading())
@@ -46,7 +46,7 @@ class ChatListScreenViewModel @Inject constructor(
 
     fun loadAvailableUsers() = loadResource(
         errorMessage = resources.loadAvailableUsersError,
-        loader = getAvailableUsersUseCase::invoke
+        loader = getAvailableUsersForNewChatUseCase::invoke
     )
         .onEach { availableUsers = it }
         .launchIn(viewModelScope)

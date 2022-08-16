@@ -26,6 +26,17 @@ internal inline fun <T> Query.createCallbackFlow(
     awaitClose { registration.remove() }
 }
 
+@JvmName("suspendVoid")
+suspend fun Task<Void>.suspend() = suspendCancellableCoroutine { continuation ->
+    addOnSuccessListener {
+        continuation.resumeWith(Result.success(Unit))
+    }.addOnFailureListener { exception ->
+        continuation.resumeWith(Result.failure(exception))
+    }.addOnCanceledListener {
+        continuation.cancel()
+    }
+}
+
 suspend fun <T> Task<T>.suspend() = suspendCancellableCoroutine<T> { continuation ->
     addOnSuccessListener { value ->
         continuation.resumeWith(Result.success(value))

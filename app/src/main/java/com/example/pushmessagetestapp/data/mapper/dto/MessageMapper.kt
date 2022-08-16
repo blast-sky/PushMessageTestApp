@@ -1,6 +1,6 @@
 package com.example.pushmessagetestapp.data.mapper.dto
 
-import com.example.pushmessagetestapp.data.dto.MessageDto
+import com.example.pushmessagetestapp.data.dto.firestore.MessageDto
 import com.example.pushmessagetestapp.domain.model.Message
 
 

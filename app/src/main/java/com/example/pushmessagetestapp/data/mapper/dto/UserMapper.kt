@@ -1,6 +1,6 @@
 package com.example.pushmessagetestapp.data.mapper.dto
 
-import com.example.pushmessagetestapp.data.dto.UserDto
+import com.example.pushmessagetestapp.data.dto.firestore.UserDto
 import com.example.pushmessagetestapp.domain.model.User
 
 fun User.toDto() = UserDto(

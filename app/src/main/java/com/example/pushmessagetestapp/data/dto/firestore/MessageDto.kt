@@ -1,4 +1,4 @@
-package com.example.pushmessagetestapp.data.dto
+package com.example.pushmessagetestapp.data.dto.firestore
 
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentId

@@ -7,7 +7,7 @@ import com.example.pushmessagetestapp.presentation.chat_list_screen.model.Messag
 
 fun Chat.toChatPresenterModel(me: User) = ChatPresenterModel(
     id = id,
-    title = (users.firstOrNull { user -> user != me } ?: me).name,
+    title = (users.firstOrNull { user -> user.id != me.id } ?: me).name,
     lastMessage = messages.lastOrNull()?.from?.let { lastMessageUserId ->
         val user = users.find { user -> user.id == lastMessageUserId }!!
         messages.last().toMessagePresenterModel(from = user.name)

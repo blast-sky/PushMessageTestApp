@@ -1,8 +1,8 @@
 package com.example.pushmessagetestapp.data.mapper.raw
 
-import com.example.pushmessagetestapp.data.dto.ChatDto
-import com.example.pushmessagetestapp.data.dto.MessageDto
-import com.example.pushmessagetestapp.data.dto.UserDto
+import com.example.pushmessagetestapp.data.dto.firestore.ChatDto
+import com.example.pushmessagetestapp.data.dto.firestore.MessageDto
+import com.example.pushmessagetestapp.data.dto.firestore.UserDto
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.ktx.toObject
 

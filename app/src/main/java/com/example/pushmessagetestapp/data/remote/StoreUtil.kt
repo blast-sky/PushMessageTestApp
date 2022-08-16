@@ -1,8 +1,8 @@
 package com.example.pushmessagetestapp.data.remote
 
-import com.example.pushmessagetestapp.data.dto.ChatDto
-import com.example.pushmessagetestapp.data.dto.MessageDto
-import com.example.pushmessagetestapp.data.dto.UserDto
+import com.example.pushmessagetestapp.data.dto.firestore.ChatDto
+import com.example.pushmessagetestapp.data.dto.firestore.MessageDto
+import com.example.pushmessagetestapp.data.dto.firestore.UserDto
 import com.example.pushmessagetestapp.data.mapper.raw.toChatDto
 import com.example.pushmessagetestapp.data.mapper.raw.toMessageDto
 import com.example.pushmessagetestapp.data.mapper.raw.toUserDto
@@ -37,6 +37,12 @@ class StoreUtil @Inject constructor() {
         const val USERS_COLLECTION = "users"
         const val USERS_FIELD_IN_CHAT = "users"
     }
+
+    suspend fun updateMessagingToken(userId: String, newToken: String): Unit =
+        usersCollectionReference
+            .document(userId)
+            .update(MESSAGE_TOKEN, newToken)
+            .suspend()
 
     suspend fun getChats(userId: String): List<ChatDto> =
         chatsCollectionReference

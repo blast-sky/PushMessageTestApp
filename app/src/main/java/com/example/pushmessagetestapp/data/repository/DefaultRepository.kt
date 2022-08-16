@@ -1,7 +1,7 @@
 package com.example.pushmessagetestapp.data.repository
 
-import com.example.pushmessagetestapp.data.dto.MessageDto
-import com.example.pushmessagetestapp.data.dto.UserDto
+import com.example.pushmessagetestapp.data.dto.firestore.MessageDto
+import com.example.pushmessagetestapp.data.dto.firestore.UserDto
 import com.example.pushmessagetestapp.data.local.SharedPreferencesUserUtil
 import com.example.pushmessagetestapp.data.mapper.dto.toChat
 import com.example.pushmessagetestapp.data.mapper.dto.toDto
@@ -24,6 +24,10 @@ class DefaultRepository @Inject constructor(
     private val messagingUtil: MessagingUtil,
     private val sharedPreferencesUserUtil: SharedPreferencesUserUtil,
 ) : Repository {
+
+    override suspend fun updateMessagingToken(newToken: String): Unit =
+        storeUtil
+            .updateMessagingToken(userId, newToken)
 
     override suspend fun getUserChats(userId: String): Flow<List<Chat>> =
         storeUtil
@@ -59,7 +63,6 @@ class DefaultRepository @Inject constructor(
             .let { token ->
                 messagingUtil.sendMessage(token, message, name)
             }
-
 
     override suspend fun getChat(chatId: String): Chat =
         storeUtil

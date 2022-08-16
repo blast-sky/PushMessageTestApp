@@ -27,6 +27,8 @@ interface Repository {
 
     suspend fun getOtherUserIdsInChat(chatId: String): List<String>
 
+    suspend fun updateMessagingToken(newToken: String)
+
     val myUser: User
         get() = User(name = name, id = userId)
 

@@ -1,4 +1,4 @@
-package com.example.pushmessagetestapp.data.remote.retrofit
+package com.example.pushmessagetestapp.data.dto.retrofit
 
 import com.google.gson.annotations.SerializedName
 

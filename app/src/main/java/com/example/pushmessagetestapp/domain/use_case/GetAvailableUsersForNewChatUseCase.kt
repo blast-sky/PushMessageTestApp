@@ -6,11 +6,12 @@ import dagger.hilt.android.scopes.ActivityRetainedScoped
 import javax.inject.Inject
 
 @ActivityRetainedScoped
-class GetAvailableUsersUseCase @Inject constructor(
+class GetAvailableUsersForNewChatUseCase @Inject constructor(
     private val repository: Repository,
 ) {
 
     suspend operator fun invoke(): List<User> =
-        repository.getAvailableUsers(repository.userId)
+        repository
+            .getAvailableUsers(repository.userId)
             .filter { user -> user.id != repository.userId }
 }

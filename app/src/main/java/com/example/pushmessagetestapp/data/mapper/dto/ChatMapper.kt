@@ -1,7 +1,7 @@
 package com.example.pushmessagetestapp.data.mapper.dto
 
-import com.example.pushmessagetestapp.data.dto.ChatDto
-import com.example.pushmessagetestapp.data.dto.MessageDto
+import com.example.pushmessagetestapp.data.dto.firestore.ChatDto
+import com.example.pushmessagetestapp.data.dto.firestore.MessageDto
 import com.example.pushmessagetestapp.data.remote.StoreUtil
 import com.example.pushmessagetestapp.domain.model.Chat
 import com.example.pushmessagetestapp.domain.model.User

@@ -16,5 +16,5 @@ class GetUserChatsUseCase @Inject constructor(
     suspend operator fun invoke(): Flow<List<Chat>> =
         repository
             .getUserChats(repository.userId)
-            .map { chats -> chats.sortedBy { chat -> chat.messages.lastOrNull()?.created } }
+            .map { chats -> chats.sortedByDescending { chat -> chat.messages.lastOrNull()?.created } }
 }
