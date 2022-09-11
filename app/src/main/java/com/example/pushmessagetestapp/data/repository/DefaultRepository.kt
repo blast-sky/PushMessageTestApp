@@ -13,12 +13,10 @@ import com.example.pushmessagetestapp.domain.model.Chat
 import com.example.pushmessagetestapp.domain.model.Message
 import com.example.pushmessagetestapp.domain.model.User
 import com.example.pushmessagetestapp.domain.repository.Repository
-import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-@ActivityRetainedScoped
 class DefaultRepository @Inject constructor(
     private val storeUtil: StoreUtil,
     private val messagingUtil: MessagingUtil,

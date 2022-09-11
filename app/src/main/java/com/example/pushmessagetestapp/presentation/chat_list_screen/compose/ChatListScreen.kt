@@ -8,12 +8,15 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.pushmessagetestapp.common.Resource
+import com.astrog.common.Resource
 import com.example.pushmessagetestapp.domain.model.Chat
 import com.example.pushmessagetestapp.domain.model.User
 import com.example.pushmessagetestapp.presentation.chat_list_screen.model.ChatPresenterModel

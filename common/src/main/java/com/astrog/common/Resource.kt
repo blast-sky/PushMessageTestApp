@@ -1,4 +1,4 @@
-package com.example.pushmessagetestapp.common
+package com.astrog.common
 
 sealed class Resource<out T> {
 

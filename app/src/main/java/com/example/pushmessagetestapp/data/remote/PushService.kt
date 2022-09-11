@@ -4,11 +4,11 @@ import android.util.Log
 import com.example.pushmessagetestapp.domain.repository.Repository
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import dagger.hilt.android.scopes.ServiceScoped
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import javax.inject.Inject
 
-@ServiceScoped
+@AndroidEntryPoint
 class PushService @Inject constructor() : FirebaseMessagingService() {
 
     @Inject
@@ -23,7 +23,8 @@ class PushService @Inject constructor() : FirebaseMessagingService() {
 
     override fun onNewToken(token: String) {
         super.onNewToken(token)
-        coroutineScope.launch { repository.updateMessagingToken(token) }
+        if (repository.isLogin)
+            coroutineScope.launch { repository.updateMessagingToken(token) }
     }
 
     override fun onMessageReceived(message: RemoteMessage) {

@@ -1,6 +1,6 @@
 package com.example.pushmessagetestapp.domain.interactor
 
-import com.example.pushmessagetestapp.common.Resource
+import com.astrog.common.Resource
 import com.example.pushmessagetestapp.domain.model.User
 import com.example.pushmessagetestapp.domain.repository.Repository
 import com.example.pushmessagetestapp.domain.repository.Resources

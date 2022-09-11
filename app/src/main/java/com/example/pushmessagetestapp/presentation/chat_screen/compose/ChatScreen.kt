@@ -7,13 +7,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Scaffold
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import com.astrog.common.Resource
 import com.example.pushmessagetestapp.domain.model.Message
-import com.example.pushmessagetestapp.common.Resource
 import com.example.pushmessagetestapp.presentation.PreviewModels
 import com.example.pushmessagetestapp.presentation.common.GoBackTopAppBar
 

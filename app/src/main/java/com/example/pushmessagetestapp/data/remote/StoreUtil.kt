@@ -9,11 +9,11 @@ import com.example.pushmessagetestapp.data.mapper.raw.toUserDto
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
-import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
+import javax.inject.Singleton
 
-@ActivityRetainedScoped
+@Singleton
 class StoreUtil @Inject constructor() {
 
     private val firebaseFirestore by lazy {

@@ -3,12 +3,11 @@ package com.example.pushmessagetestapp.presentation.navigation.graph
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.*
 import androidx.navigation.compose.composable
-import com.example.pushmessagetestapp.presentation.chat_screen.ChatScreenViewModel
-import com.example.pushmessagetestapp.presentation.chat_screen.compose.ChatScreen
-import com.example.pushmessagetestapp.presentation.login_screen.LoginScreen
-import com.example.pushmessagetestapp.presentation.login_screen.LoginScreenViewModel
+import com.astrog.login.presentation.LoginScreen
 import com.example.pushmessagetestapp.presentation.chat_list_screen.ChatListScreenViewModel
 import com.example.pushmessagetestapp.presentation.chat_list_screen.compose.ChatListScreen
+import com.example.pushmessagetestapp.presentation.chat_screen.ChatScreenViewModel
+import com.example.pushmessagetestapp.presentation.chat_screen.compose.ChatScreen
 import com.example.pushmessagetestapp.presentation.navigation.Screens
 
 
@@ -47,8 +46,7 @@ fun NavGraphBuilder.mainGraph(navController: NavController, routeName: String) =
         }
 
         composable(route = Screens.Login.route) {
-            val viewModel = hiltViewModel<LoginScreenViewModel>()
-            LoginScreen(isLogin = viewModel.isLogin, onLoginClicked = viewModel::register) {
+            LoginScreen {
                 navController.navigate(Screens.Main.route) {
                     popUpTo(Screens.Login.route) { inclusive = true }
                 }

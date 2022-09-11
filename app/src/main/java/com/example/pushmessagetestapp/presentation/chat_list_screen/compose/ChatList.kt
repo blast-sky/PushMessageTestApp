@@ -13,8 +13,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import com.astrog.common.Resource
 import com.example.pushmessagetestapp.R
-import com.example.pushmessagetestapp.common.Resource
 import com.example.pushmessagetestapp.presentation.chat_list_screen.model.ChatPresenterModel
 
 @Composable

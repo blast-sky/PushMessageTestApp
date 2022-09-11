@@ -14,3 +14,7 @@ dependencyResolutionManagement {
 }
 rootProject.name = "PushMessageTestApp"
 include ':app'
+include ':login'
+include ':firestore-common'
+include ':common'
+include ':shared-preferences'

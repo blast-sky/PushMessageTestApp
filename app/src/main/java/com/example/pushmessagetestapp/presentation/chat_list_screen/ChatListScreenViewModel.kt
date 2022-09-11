@@ -5,8 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.pushmessagetestapp.common.Resource
-import com.example.pushmessagetestapp.common.map
+import com.astrog.common.Resource
+import com.astrog.common.map
 import com.example.pushmessagetestapp.domain.model.Chat
 import com.example.pushmessagetestapp.domain.model.User
 import com.example.pushmessagetestapp.domain.repository.Repository

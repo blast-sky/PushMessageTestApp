@@ -40,8 +40,8 @@ private val LightColorPalette = lightColors(
 )
 
 private val CustomLightColorPalette = LightColorPalette.copy(
-    primary = Blue500,
-    primaryVariant = Blue700,
+    primary = Blue700,
+    primaryVariant = Blue500,
     secondary = Blue200,
 )
 

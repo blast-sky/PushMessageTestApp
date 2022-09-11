@@ -1,6 +1,6 @@
 package com.example.pushmessagetestapp.presentation
 
-import com.example.pushmessagetestapp.common.Resource
+import com.astrog.common.Resource
 import kotlinx.coroutines.flow.*
 
 fun <T> loadResource(

@@ -1,13 +1,13 @@
 package com.example.pushmessagetestapp.data.remote
 
-import com.example.pushmessagetestapp.data.remote.retrofit.MessagingService
 import com.example.pushmessagetestapp.data.dto.retrofit.NotificationInfo
 import com.example.pushmessagetestapp.data.dto.retrofit.SendMessageBody
+import com.example.pushmessagetestapp.data.remote.retrofit.MessagingService
 import com.google.firebase.messaging.FirebaseMessaging
-import dagger.hilt.android.scopes.ActivityRetainedScoped
 import javax.inject.Inject
+import javax.inject.Singleton
 
-@ActivityRetainedScoped
+@Singleton
 class MessagingUtil @Inject constructor(
     private val messagingService: MessagingService,
 ) {
