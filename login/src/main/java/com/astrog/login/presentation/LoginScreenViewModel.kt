@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.astrog.common.Resource
 import com.astrog.common.map
 import com.astrog.login.domain.model.RegistrationNameAndPasswordsChecker
+import com.astrog.login.domain.repository.Repository
 import com.astrog.login.domain.repository.Resources
 import com.astrog.login.domain.use_case.LoginUseCase
 import com.astrog.login.domain.use_case.RegisterNewUserUseCase
@@ -21,14 +22,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginScreenViewModel @Inject constructor(
-    private val resources: Resources,
     private val registerNewUserUseCase: RegisterNewUserUseCase,
     private val loginUseCase: LoginUseCase,
     private val nameAndPasswordsChecker: RegistrationNameAndPasswordsChecker,
-    private val sharedPreferences: SharedPreferencesUserUtil,
+    private val repository: Repository,
 ) : ViewModel() {
 
-    var isLogin: Resource<Boolean> by mutableStateOf(Resource.Success(sharedPreferences.isLogin)) // TODO
+    var isLogin: Resource<Boolean> by mutableStateOf(Resource.Success(repository.isLogin)) // TODO
     var loginState: Resource<String> by mutableStateOf(Resource.Success(""))
     var registerState: Resource<String> by mutableStateOf(Resource.Success(""))
     var userId: String? = null
@@ -64,8 +64,8 @@ class LoginScreenViewModel @Inject constructor(
             .onCompletion {
                 val state = registerState
                 if (state is Resource.Success && it == null) {
-                    sharedPreferences.login(state.value, name)
-                    isLogin = Resource.Success(sharedPreferences.isLogin)
+                    repository.localLogin(state.value, name)
+                    isLogin = Resource.Success(repository.isLogin)
                 }
             }
             .launchIn(viewModelScope)
@@ -80,8 +80,8 @@ class LoginScreenViewModel @Inject constructor(
         .onCompletion {
             val state = loginState
             if (state is Resource.Success && it == null) {
-                sharedPreferences.login(state.value, name)
-                isLogin = Resource.Success(sharedPreferences.isLogin)
+                repository.localLogin(state.value, name)
+                isLogin = Resource.Success(repository.isLogin)
             }
         }
         .launchIn(viewModelScope)

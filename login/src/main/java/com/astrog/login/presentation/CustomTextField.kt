@@ -1,5 +1,6 @@
 package com.astrog.login.presentation
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.TextField
@@ -26,13 +27,14 @@ fun CustomTextField(
         label = label,
         keyboardOptions = keyboardOptions,
         colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = lightBlue,
-            cursorColor = Color.Black,
+            backgroundColor = if (!isSystemInDarkTheme()) lightBlue else MaterialTheme.colors.primary,
+            cursorColor = MaterialTheme.colors.onSurface,
             disabledLabelColor = lightBlue,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             errorLabelColor = MaterialTheme.colors.error,
             errorIndicatorColor = Color.Transparent,
+            focusedLabelColor = MaterialTheme.colors.onSurface,
         ),
         isError = isError,
         shape = MaterialTheme.shapes.medium,

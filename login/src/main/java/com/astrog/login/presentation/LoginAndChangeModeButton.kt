@@ -1,5 +1,6 @@
 package com.astrog.login.presentation
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.width
@@ -15,7 +16,8 @@ import com.astrog.common.Resource
 private fun LoginButton(loginLabel: String, isActive: Boolean, onLoginClicked: () -> Unit) = Button(
     modifier = Modifier,
     enabled = isActive,
-    onClick = onLoginClicked
+    onClick = onLoginClicked,
+    colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary),
 ) {
     Text(text = loginLabel)
 }
@@ -46,7 +48,7 @@ fun LoginAndChangeModeButton(
         ) {
             Text(
                 text = changeModeLabel,
-                color = Color.Blue,
+                color = if(!isSystemInDarkTheme()) Color.Blue else Color.Gray,
                 style = MaterialTheme.typography.caption,
                 textAlign = TextAlign.Center,
             )

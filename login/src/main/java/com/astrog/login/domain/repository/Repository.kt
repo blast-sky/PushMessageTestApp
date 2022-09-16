@@ -6,4 +6,7 @@ interface Repository {
 
     suspend fun register(name: String, password: String): String
 
+    fun localLogin(userId: String, name: String)
+
+    val isLogin: Boolean
 }

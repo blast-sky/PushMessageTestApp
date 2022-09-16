@@ -12,7 +12,7 @@ class SendMessageUseCase @Inject constructor(
     suspend operator fun invoke(chatId: String, message: String): String {
         val messageId = repository.createMessage(chatId, message)
 
-        if(messageId.isNotBlank()) {
+        if (messageId.isNotBlank()) {
             val userIds = repository.getOtherUserIdsInChat(chatId)
             userIds.forEach { id -> repository.sendMessage(id, message) }
         }
