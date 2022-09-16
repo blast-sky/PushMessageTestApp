@@ -1,1 +1,4 @@
 /build
+/release/output-metadata.json
+/release/app-release.apk
+/src/main/java/com/example/pushmessagetestapp/Config.kt

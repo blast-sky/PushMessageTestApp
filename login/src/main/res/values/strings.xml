@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">login</string>
+    <string name="not_valid_username_or_password">No one user with that name and password</string>
+    <string name="user_with_same_name_already_exist">User with same name already exist</string>
+    <string name="registration">Registration</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="repeat_password">Repeat password</string>
+    <string name="register">Register</string>
+    <string name="passwords_not_same">Passwords aren\'t same</string>
+    <string name="password_must_be_non_empty">Password must be non-empty</string>
+    <string name="username_must_be_non_empty">Username must be non-empty</string>
+    <string name="username_must_include_characters">Username must include characters</string>
+</resources>
