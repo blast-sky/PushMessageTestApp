@@ -21,6 +21,12 @@ class SharedPreferencesUserUtil @Inject constructor(
         this.isLogin = true
     }
 
+    fun unLogin() {
+        userId = ""
+        name = ""
+        isLogin = false
+    }
+
     private companion object {
         const val NAME = "NAME"
         const val USER_ID = "USER_ID"

@@ -3,11 +3,11 @@ package com.example.pushmessagetestapp.presentation.navigation.graph
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.*
 import androidx.navigation.compose.composable
+import com.astrog.chats_list.presentation.chat_screen.compose.ChatScreen
 import com.astrog.login.presentation.LoginScreen
-import com.example.pushmessagetestapp.presentation.chat_list_screen.ChatListScreenViewModel
-import com.example.pushmessagetestapp.presentation.chat_list_screen.compose.ChatListScreen
-import com.example.pushmessagetestapp.presentation.chat_screen.ChatScreenViewModel
-import com.example.pushmessagetestapp.presentation.chat_screen.compose.ChatScreen
+import com.astrog.chats_list.presentation.chat_list_screen.ChatListScreenViewModel
+import com.astrog.chats_list.presentation.chat_list_screen.compose.ChatListScreen
+import com.astrog.chats_list.presentation.chat_screen.ChatScreenViewModel
 import com.example.pushmessagetestapp.presentation.navigation.Screens
 
 
@@ -16,11 +16,12 @@ fun NavGraphBuilder.mainGraph(navController: NavController, routeName: String) =
         composable(route = Screens.Main.route) {
             val viewModel = hiltViewModel<ChatListScreenViewModel>()
             ChatListScreen(
-                chats = viewModel.chats,
-                availableUsers = viewModel.availableUsers,
-                onChatClicked = { chatId, chatTitle -> navController.navigate("${Screens.Chat.route}/$chatId/$chatTitle") },
-                createChat = viewModel::createChat,
-                loadAvailableUsers = viewModel::loadAvailableUsers
+                goToLoginScreen = { navController.navigate(Screens.Login.route) {
+                    popUpTo(Screens.Main.route) { inclusive = true }
+                } },
+                onChatClicked = { chatId, chatTitle ->
+                    navController.navigate("${Screens.Chat.route}/$chatId/$chatTitle")
+                },
             )
         }
 

@@ -4,8 +4,8 @@ package com.example.pushmessagetestapp
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.example.pushmessagetestapp.data.mapper.dto.toMessage
-import com.example.pushmessagetestapp.data.remote.StoreUtil
+import com.astrog.chats_list.data.remote.retrofit.mapper.toMessage
+import com.astrog.chats_list.data.remote.StoreUtil
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.test.runTest
