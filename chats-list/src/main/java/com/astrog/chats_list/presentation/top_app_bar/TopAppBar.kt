@@ -11,6 +11,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
@@ -31,15 +32,11 @@ fun TopAppBar(
     goBackButton: @Composable Action? = null,
     menu: @Composable Action? = null
 ) {
-    val roundedCorner = 16.dp
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(height)
-            .clip(RoundedCornerShape(bottomStart = roundedCorner, bottomEnd = roundedCorner))
-            .background(MaterialTheme.colors.primary),
-        verticalAlignment = Alignment.CenterVertically,
+    androidx.compose.material.TopAppBar(
+        elevation = 12.dp,
+        backgroundColor = MaterialTheme.colors.primary,
     ) {
+        val roundedCorner = 16.dp
         val textPaddingValues = remember {
             derivedStateOf {
                 PaddingValues(

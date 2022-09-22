@@ -21,13 +21,17 @@ private val DarkColorPalette = darkColors(
 )
 
 private val CustomDarkColorPalette = DarkColorPalette.copy(
-    primary = Color.Black,
-    primaryVariant = Color.Black,
-    secondary = Color.Black,
+    primary = Black700,
+    primaryVariant = Black500,
+    secondary = BlackBlueVariant,
 
-    background = Gray700,
+    background = Black500,
+    surface = Black700,
+
     onPrimary = Color.White,
-    surface = Color.Black,
+    onSurface = Color.White,
+    onBackground = Color.White,
+    onSecondary = Color.White,
 )
 
 private val LightColorPalette = lightColors(
@@ -46,7 +50,7 @@ private val LightColorPalette = lightColors(
 private val CustomLightColorPalette = LightColorPalette.copy(
     primary = Blue700,
     primaryVariant = Blue500,
-    secondary = Blue200,
+    secondary = Blue700,
 )
 
 @Composable

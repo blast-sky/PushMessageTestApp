@@ -64,14 +64,14 @@ fun ChatCreateDialog(
                         colors = ButtonDefaults.buttonColors(backgroundColor = colors.primary),
                     ) {
                         Text(
-                            text = "Cancel",
+                            text = stringResource(R.string.cancel),
                             style = MaterialTheme.typography.subtitle1,
                             color = colors.onPrimary,
                         )
                     }
                     Spacer(modifier = Modifier.width(4.dp))
                     Button(
-                        colors = ButtonDefaults.buttonColors(backgroundColor = colors.primary),
+                        colors = ButtonDefaults.buttonColors(backgroundColor = colors.secondary),
                         onClick = {
                             (users as? Resource.Success)
                                 ?.value
@@ -81,9 +81,10 @@ fun ChatCreateDialog(
                                     createChat.invoke(chat)
                                 }
                             closeSelf.invoke()
-                        }) {
+                        }
+                    ) {
                         Text(
-                            text = "Ok",
+                            text = stringResource(R.string.ok),
                             style = MaterialTheme.typography.subtitle1,
                             color = colors.onPrimary,
                         )
@@ -107,14 +108,16 @@ private fun ChatCreateDialogSuccess(
         modifier = Modifier.padding(6.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Card(backgroundColor = colors.primary, onClick = { setExpanded(true) }) {
+        Card(
+            onClick = { setExpanded(true) },
+            backgroundColor = MaterialTheme.colors.secondary,
+        ) {
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(6.dp)
-                    .background(color = colors.primary),
+                    .padding(6.dp),
                 text = users.getOrNull(selectedIndex)?.name
-                    ?: "Select user", // TODO extract resource
+                    ?: stringResource(R.string.select_user),
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.subtitle1,
                 overflow = TextOverflow.Ellipsis,
@@ -122,9 +125,8 @@ private fun ChatCreateDialogSuccess(
             )
         }
 
-
         DropdownMenu(
-            modifier = Modifier,
+            modifier = Modifier.background(MaterialTheme.colors.background),
             expanded = expanded,
             onDismissRequest = { setExpanded.invoke(false) },
         ) {
@@ -136,9 +138,9 @@ private fun ChatCreateDialogSuccess(
 
             users.forEachIndexed { index, user ->
                 val backgroundColor = if (index == selectedIndex)
-                    Color.Blue // TODO change on light blue
+                    colors.secondary
                 else
-                    colors.surface
+                    colors.background
 
                 DropdownMenuItem(
                     onClick = {
