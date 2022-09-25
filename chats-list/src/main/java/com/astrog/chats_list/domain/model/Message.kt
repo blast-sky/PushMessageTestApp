@@ -7,4 +7,5 @@ data class Message(
     val created: Date = Date(),
     val from: String = "",
     val message: String = "",
+    val image: String = "",
 )

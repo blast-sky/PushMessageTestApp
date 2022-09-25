@@ -1,5 +1,7 @@
 package com.astrog.chats_list.domain.repository
 
+import android.net.Uri
+import com.astrog.chats_list.data.remote.UploadResult
 import com.astrog.chats_list.domain.model.Chat
 import com.astrog.chats_list.domain.model.Message
 import com.astrog.chats_list.domain.model.User
@@ -13,7 +15,9 @@ interface Repository {
 
     suspend fun createChat(chat: Chat): String
 
-    suspend fun createMessage(chatId: String, message: String): String
+    suspend fun createMessage(chatId: String, message: String, image: String): String
+
+    suspend fun uploadImages(image: Uri): Flow<UploadResult>
 
     suspend fun getChat(chatId: String): Chat
 
@@ -21,13 +25,15 @@ interface Repository {
 
     suspend fun getChatMessages(chatId: String): Flow<List<Message>>
 
-    suspend fun getAvailableUsers(userId: String): List<User>
+    suspend fun getAvailableUsers(): List<User>
 
     suspend fun getMessagingToken(): String
 
     suspend fun getOtherUserIdsInChat(chatId: String): List<String>
 
     suspend fun updateMessagingToken(newToken: String)
+
+    suspend fun getChatsWithUsers(userIds: List<String>): List<String>
 
     fun unLogin()
 

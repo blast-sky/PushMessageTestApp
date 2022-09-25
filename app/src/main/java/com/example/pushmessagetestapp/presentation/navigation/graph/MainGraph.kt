@@ -34,14 +34,9 @@ fun NavGraphBuilder.mainGraph(navController: NavController, routeName: String) =
                 navArgument(chatTitleArgName) { type = NavType.StringType }
             )
         ) {
-            val viewModel = hiltViewModel<ChatScreenViewModel>()
             ChatScreen(
                 chatId = it.arguments!!.getString(chatIdArgName)!!,
                 chatTitle = it.arguments!!.getString(chatTitleArgName)!!,
-                myUserId = viewModel.userId,
-                messages = viewModel.messages,
-                loadMessage = viewModel::loadMessages,
-                sendMessage = viewModel::sendMessage,
                 goBack = navController::popBackStack
             )
         }

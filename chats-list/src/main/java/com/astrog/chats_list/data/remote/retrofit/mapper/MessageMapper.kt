@@ -9,4 +9,5 @@ fun MessageDto.toMessage() = Message(
     created = created.toDate(),
     from = from,
     message = message,
+    image = image,
 )

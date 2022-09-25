@@ -9,4 +9,5 @@ data class MessageDto(
     @PropertyName("from") val from: String = "",
     @PropertyName("message") val message: String = "",
     @PropertyName("created") val created: Timestamp = Timestamp.now(),
+    @PropertyName("image") val image: String = "",
 )

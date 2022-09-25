@@ -13,7 +13,5 @@ class GetChatMessagesUseCase @Inject constructor(
 ) {
 
     suspend operator fun invoke(chatId: String): Flow<List<Message>> =
-        repository
-            .getChatMessages(chatId)
-            .map { messages -> messages.sortedBy { message -> message.created } }
+        repository.getChatMessages(chatId)
 }

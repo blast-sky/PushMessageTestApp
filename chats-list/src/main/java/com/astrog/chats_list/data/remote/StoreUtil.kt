@@ -6,9 +6,7 @@ import com.astrog.firestorecommon.dto.UserDto
 import com.astrog.firestorecommon.toChatDto
 import com.astrog.firestorecommon.toMessageDto
 import com.astrog.firestorecommon.toUserDto
-import com.google.firebase.firestore.DocumentReference
-import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.*
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -36,6 +34,19 @@ class StoreUtil @Inject constructor() {
         const val MESSAGE_COLLECTION = "messages"
         const val USERS_COLLECTION = "users"
         const val USERS_FIELD_IN_CHAT = "users"
+
+        const val MESSAGE_CREATED = "created"
+    }
+
+    suspend fun getChatWithUsers(users: List<String>): List<String> {
+        if(users.isEmpty()) return emptyList()
+        return chatsCollectionReference
+            .whereArrayContains(USERS_FIELD_IN_CHAT, users.first())
+            .get()
+            .suspend()
+            .map(DocumentSnapshot::toChatDto)
+            .filter { chatDto -> chatDto.users.containsAll(users.slice(1..users.lastIndex)) }
+            .map(ChatDto::id)
     }
 
     suspend fun updateMessagingToken(userId: String, newToken: String): Unit =
@@ -98,6 +109,7 @@ class StoreUtil @Inject constructor() {
     fun getMessagesFlow(chatId: String): Flow<List<MessageDto>> =
         getChatReferenceById(chatId)
             .collection(MESSAGE_COLLECTION)
+            .orderBy(MESSAGE_CREATED, Query.Direction.ASCENDING)
             .createCallbackFlow(
                 errorMessage = "error with firestore chat message snapshot listener",
                 mapper = DocumentSnapshot::toMessageDto

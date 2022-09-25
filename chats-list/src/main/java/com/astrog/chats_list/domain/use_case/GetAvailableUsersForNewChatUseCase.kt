@@ -12,6 +12,6 @@ class GetAvailableUsersForNewChatUseCase @Inject constructor(
 
     suspend operator fun invoke(): List<User> =
         repository
-            .getAvailableUsers(repository.userId)
+            .getAvailableUsers()
             .filter { user -> user.id != repository.userId }
 }

@@ -1,5 +1,6 @@
 package com.astrog.chats_list.presentation.chat_screen
 
+import android.net.Uri
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -36,10 +37,11 @@ class ChatScreenViewModel @Inject constructor(
         .onEach { messages = it }
         .launchIn(viewModelScope)
 
-    fun sendMessage(chatId: String, message: String) = viewModelScope.launch {
+    fun sendMessage(chatId: String, message: String, uri: Uri?) = viewModelScope.launch {
         sendMessageUseCase(
             chatId = chatId,
             message = message,
+            uri = uri,
         )
     }
 }

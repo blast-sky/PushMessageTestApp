@@ -1,7 +1,10 @@
 package com.astrog.chats_list.data.repository
 
+import android.net.Uri
+import com.astrog.chats_list.data.remote.CloudStorage
 import com.astrog.chats_list.data.remote.MessagingUtil
 import com.astrog.chats_list.data.remote.StoreUtil
+import com.astrog.chats_list.data.remote.UploadResult
 import com.astrog.chats_list.data.remote.retrofit.mapper.toChat
 import com.astrog.chats_list.data.remote.retrofit.mapper.toDto
 import com.astrog.chats_list.data.remote.retrofit.mapper.toMessage
@@ -19,11 +22,16 @@ import javax.inject.Inject
 
 class DefaultRepository @Inject constructor(
     private val storeUtil: StoreUtil,
+    private val storage: CloudStorage,
     private val messagingUtil: MessagingUtil,
     private val sharedPreferencesUserUtil: SharedPreferencesUserUtil,
 ) : Repository {
 
     override fun unLogin() = sharedPreferencesUserUtil.unLogin()
+
+    override suspend fun getChatsWithUsers(userIds: List<String>): List<String> =
+        storeUtil
+            .getChatWithUsers(userIds)
 
     override suspend fun updateMessagingToken(newToken: String): Unit =
         storeUtil
@@ -39,10 +47,14 @@ class DefaultRepository @Inject constructor(
             .getMessagesFlow(chatId)
             .map { dtoList -> dtoList.map(MessageDto::toMessage) }
 
-    override suspend fun getAvailableUsers(userId: String): List<User> =
+    override suspend fun getAvailableUsers(): List<User> =
         storeUtil
             .getAllUser()
             .map(UserDto::toUser)
+            .filter { user ->
+                val chatsWithThatUsers = storeUtil.getChatWithUsers(listOf(user.id, this.userId))
+                return@filter chatsWithThatUsers.isEmpty()
+            }
 
     override suspend fun registerNewUser(user: User): String =
         storeUtil
@@ -51,10 +63,16 @@ class DefaultRepository @Inject constructor(
                 if (id.isNotBlank()) sharedPreferencesUserUtil.login(id, user.name)
             }
 
-    override suspend fun createMessage(chatId: String, message: String): String =
+    override suspend fun createMessage(chatId: String, message: String, image: String): String =
         storeUtil
-            .addNewMessage(chatId, MessageDto(message = message, from = userId))
+            .addNewMessage(
+                chatId,
+                MessageDto(message = message, from = userId, image = image)
+            )
             .id
+
+    override suspend fun uploadImages(image: Uri): Flow<UploadResult> = // TODO
+        storage.uploadImage(image)
 
     override suspend fun sendMessage(userId: String, message: String): Unit =
         storeUtil
